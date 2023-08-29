@@ -5,6 +5,7 @@ function alert_scroll (title, input){
     var list = w.add ("edittext", undefined, input, {multiline: true, scrolling: true});
     list.maximumSize.height = w.maximumSize.height-400;
     list.minimumSize.width = 800;
+    list.graphics.font = "DDC Uchen:32";
     w.add ("button", undefined, "Close", {name: "ok"});
     w.show ();
 }
