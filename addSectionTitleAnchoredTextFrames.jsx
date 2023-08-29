@@ -5,13 +5,13 @@ var selection = app.selection[0];
 
 var sectionTitleLeftStyle = doc.paragraphStyles.itemByName("Section Title Left");
 var sectionTitleRightStyle = doc.paragraphStyles.itemByName("Section Title Right");
-var sectionTitleKarchakStyle = doc.paragraphStyles.itemByName("Section Title Karchak");
+var sectionTitleKarchakStyle = doc.paragraphStyles.itemByName("Section Title Karchag");
 if (!(sectionTitleLeftStyle.isValid && sectionTitleRightStyle.isValid && sectionTitleKarchakStyle.isValid)) {
     alert(
         "Before using this script you need to have defined the following styles:\n"+
         "- Section Title Left\n"+
         "- Section Title Right\n"+
-        "- Section Title Karchak"
+        "- Section Title Karchag"
     );
 } else if (!selection) {
     alert("Position your cursor anywhere within the text that marks the beginning of the section");
