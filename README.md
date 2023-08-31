@@ -24,7 +24,6 @@ of section titles and *karchag* (table of contents).
 
 #### TODO
 
-* Place them on the right side if the page if it's a right page
 * Place them one below another if multiple sections start on the same page
 
 ### generateKarchag
