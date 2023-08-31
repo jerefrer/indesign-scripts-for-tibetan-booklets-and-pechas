@@ -1,4 +1,4 @@
-function alert_scroll (title, input){
+﻿function alert_scroll (title, input){
     if (input instanceof Array)
         input = input.join ("\r");
     var w = new Window ("dialog", title);
@@ -25,4 +25,27 @@ function getObjectProperties (object) {
             _resultArray.push(object.constructor.name + "." + property + " = " + _result);
     }
     return _resultArray.sort();
+}
+
+
+function tibetanNumber (number) {
+  if (typeof(number) == 'number') {
+    var digits = number.toString().split('');
+    return digits.map(function(digit) {
+        return tibetanNumber(digit.toInt());
+    }).join('');
+  } else {
+    switch(number) {
+      case '0': return '༠'; break;
+      case '1': return '༡'; break;
+      case '2': return '༢'; break;
+      case '3': return '༣'; break;
+      case '4': return '༤'; break;
+      case '5': return '༥'; break;
+      case '6': return '༦'; break;
+      case '7': return '༧'; break;
+      case '8': return '༨'; break;
+      case '9': return '༩'; break;
+    }
+  }
 }
