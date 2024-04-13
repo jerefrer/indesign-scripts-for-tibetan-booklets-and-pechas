@@ -3,12 +3,12 @@
 var document = app.activeDocument;
 
 var scriptDirectory = File($.fileName).parent.fsName;
-
 function openDialog() {
   var dialog = new Window('dialog', 'InsertPhonetics');
   var doInsertPhonetics = false;
   
   var allParagraphStyles = document.allParagraphStyles;
+  var allCharacterStyles = document.allCharacterStyles;
   
   function addStyleDropdown(dialog, label, styles, selectedStyle) {
     var group = dialog.add('group');
@@ -35,8 +35,10 @@ function openDialog() {
   var phoneticsDropdown = addStyleDropdown(dialog, 'Phonetics Style', allParagraphStyles, selectedStyles.phonetics);
   var mantraDropdown = addStyleDropdown(dialog, 'Mantra Style (Optional)', [{name: 'None'}].concat(allParagraphStyles), selectedStyles.mantra);
   
-  function setDropdownSelection(dropdown, selectedStyle) {
-    var selectedIndex = findSelectedIndex(allParagraphStyles, selectedStyle);
+  var smallLettersDropdown = addStyleDropdown(dialog, 'Small Letters Character Style (Optional)', allCharacterStyles, selectedStyles.smallLetters); // Add this line
+  
+  function setDropdownSelectionWithNoneOption(dropdown, selectedStyle, styles) {
+    var selectedIndex = findSelectedIndex(styles, selectedStyle);
     if (selectedIndex !== -1) {
       dropdown.selection = selectedIndex + 1;
     } else {
@@ -44,13 +46,15 @@ function openDialog() {
     }
   }
   
-  setDropdownSelection(mantraDropdown, selectedStyles.mantra);
+  setDropdownSelectionWithNoneOption(mantraDropdown, selectedStyles.mantra, allParagraphStyles);
+  setDropdownSelectionWithNoneOption(smallLettersDropdown, selectedStyles.smallLetters, allCharacterStyles);
 
   function setSelectedStyles() {
     selectedStyles = {
       tibetan: tibetanDropdown.selection && tibetanDropdown.selection.text,
       phonetics: phoneticsDropdown.selection && phoneticsDropdown.selection.text,
-      mantra: mantraDropdown.selection && mantraDropdown.selection.text !== 'None' ? mantraDropdown.selection.text : null
+      mantra: mantraDropdown.selection && mantraDropdown.selection.text !== 'None' ? mantraDropdown.selection.text : null,
+      smallLetters: smallLettersDropdown.selection && smallLettersDropdown.selection.text !== 'None' ? smallLettersDropdown.selection.text : null,
     };
   }
   
@@ -85,9 +89,10 @@ function openDialog() {
 function insertPhonetics(selectedStyles) {
   var selection = app.selection[0];
   
-  var tibetanStyle = findStyleByPath(selectedStyles.tibetan);
-  var phoneticsStyle = findStyleByPath(selectedStyles.phonetics);
-  var mantraStyle = selectedStyles.mantra ? findStyleByPath(selectedStyles.mantra) : null;
+  var tibetanStyle = findStyleByPath(selectedStyles.tibetan, 'paragraph');
+  var phoneticsStyle = findStyleByPath(selectedStyles.phonetics, 'paragraph');
+  var mantraStyle = selectedStyles.mantra ? findStyleByPath(selectedStyles.mantra, 'paragraph') : null;
+  var smallLettersCharacterStyle = selectedStyles.smallLetters ? findStyleByPath(selectedStyles.smallLetters, 'character') : null;
   
   if (selection && selection.contents) {
     var selectedParagraphs = selection.paragraphs;
@@ -109,9 +114,11 @@ function insertPhonetics(selectedStyles) {
   
   function processParagraph(paragraph) {  
     var followingParagraph = paragraph.insertionPoints.item(-1).paragraphs[0];
-    if (paragraph.appliedParagraphStyle === tibetanStyle && followingParagraph.appliedParagraphStyle !== mantraStyle) {
-      var phonetics = generatePhoneticsForEachGroupSplitBySpace(paragraph.contents);
-      
+    if (paragraph.appliedParagraphStyle === tibetanStyle && (!followingParagraph.isValid || followingParagraph.appliedParagraphStyle !== mantraStyle)) {
+      var phonetics = generatePhoneticsForEachGroupSplitBySpace(ignoreSmallLetters(paragraph.contents));
+      if (phonetics.replace(/\s/g, '').length === 0) {
+        return;
+      }
       var insertionPoint = paragraph.insertionPoints.item(-1);
       insertionPoint.contents = "\r";
       
@@ -119,6 +126,19 @@ function insertPhonetics(selectedStyles) {
       phoneticsParagraph.contents = phonetics + "\r";
       phoneticsParagraph.appliedParagraphStyle = phoneticsStyle;
     }
+  }
+
+  function ignoreSmallLetters(text) {
+    var textWithoutSmallLetters = '';
+    for (var rangeIndex = 0; rangeIndex < paragraph.textStyleRanges.length; rangeIndex++) {
+      var textStyleRange = paragraph.textStyleRanges.item(rangeIndex);
+      if (textStyleRange.appliedCharacterStyle === smallLettersCharacterStyle) {
+        textWithoutSmallLetters += " ";
+      } else {
+        textWithoutSmallLetters += textStyleRange.contents;
+      }
+    }
+    return textWithoutSmallLetters;
   }
   
   function generatePhoneticsForEachGroupSplitBySpace(text) {
@@ -165,14 +185,19 @@ function insertPhonetics(selectedStyles) {
 // Private
 
 function requiredStylesAreSelected(selectedStyles) {
-  var tibetanExists = selectedStyles.tibetan && findStyleByPath(selectedStyles.tibetan);
-  var phoneticsExists = selectedStyles.phonetics && findStyleByPath(selectedStyles.phonetics);
+  var tibetanExists = selectedStyles.tibetan && findStyleByPath(selectedStyles.tibetan, 'paragraph');
+  var phoneticsExists = selectedStyles.phonetics && findStyleByPath(selectedStyles.phonetics, 'paragraph');
   return tibetanExists && phoneticsExists;
 }
   
-function findStyleByPath(stylePath) {
+function findStyleByPath(stylePath, type) {
   var pathParts = stylePath.split('/');
-  var currentCollection = document.paragraphStyles;
+  var currentCollection;
+  if (type === 'paragraph') {
+    currentCollection = document.paragraphStyles;
+  } else if (type === 'character') {
+    currentCollection = document.characterStyles;
+  }
   for (var i = 0; i < pathParts.length; i++) {
     var part = pathParts[i];
     var foundStyleOrGroup = currentCollection.itemByName(part);
