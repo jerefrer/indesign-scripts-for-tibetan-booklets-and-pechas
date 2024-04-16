@@ -6,5 +6,5 @@ var selectedStyles = retrievedData ? JSON.parse(retrievedData) : {};
 if (requiredStylesAreSelected(selectedStyles)) {
   insertPhonetics(selectedStyles);
 } else {
-  openDialog();
+  openSettings();
 }
