@@ -1,4 +1,4 @@
-#include "./lib.js"
+#include "./lib/insert-phonetics.js"
 
 var retrievedData = document.extractLabel("selectedStyles");
 var selectedStyles = retrievedData ? JSON.parse(retrievedData) : {};
