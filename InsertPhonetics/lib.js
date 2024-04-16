@@ -124,6 +124,7 @@ function insertPhonetics(selectedStyles) {
       
       var phoneticsParagraph = insertionPoint.paragraphs[0];
       phoneticsParagraph.contents = phonetics + "\r";
+      phoneticsParagraph.textStyleRanges[0].appliedCharacterStyle = findStyleByPath('[None]', 'character');
       phoneticsParagraph.appliedParagraphStyle = phoneticsStyle;
     }
   }
