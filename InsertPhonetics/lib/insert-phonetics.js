@@ -113,31 +113,41 @@ function insertPhonetics(selectedStyles) {
     }
   }
   
-  function processParagraph(paragraph) {  
+  function processParagraph(paragraph) {
+    var lines = paragraph.lines;
     var followingParagraph = paragraph.insertionPoints.item(-1).paragraphs[0];
     if (paragraph.appliedParagraphStyle === tibetanStyle && (!followingParagraph.isValid || followingParagraph.appliedParagraphStyle !== mantraStyle)) {
-      var phonetics = generatePhoneticsForEachGroupSplitBySpace(ignoreSmallLetters(paragraph.contents));
+      var phonetics = generatePhoneticsForEachGroupSplitBySpace(ignoreSmallLetters(paragraph));
       if (phonetics.replace(/\s/g, '').length === 0) {
         return;
       }
       var insertionPoint = paragraph.insertionPoints.item(-1);
       insertionPoint.contents = "\r";
       var phoneticsParagraph = insertionPoint.paragraphs[0];
-      phoneticsParagraph.contents = phonetics + "\r";
-      phoneticsParagraph.textStyleRanges[0].appliedCharacterStyle = findStyleByPath('[None]', 'character');
-      phoneticsParagraph.appliedParagraphStyle = phoneticsStyle;
+      if (phoneticsParagraph.isValid) {
+        phoneticsParagraph.contents = phonetics + "\r";
+        phoneticsParagraph.textStyleRanges[0].appliedCharacterStyle = findStyleByPath('[None]', 'character');
+        phoneticsParagraph.appliedParagraphStyle = phoneticsStyle;
+      } else {
+        // If it's invalid, then it's the last line of the document.
+        // I couldn't find a way to process it too, but that shouldn't happen most of the time anyway.
+      }
     }
   }
 
-  function ignoreSmallLetters(text) {
+  function ignoreSmallLetters(paragraph) {
     var textWithoutSmallLetters = '';
     for (var rangeIndex = 0; rangeIndex < paragraph.textStyleRanges.length; rangeIndex++) {
       var textStyleRange = paragraph.textStyleRanges.item(rangeIndex);
-      if (textStyleRange.contents.replace(/[ \r\n]+/g, '').length) {
+      var contents = textStyleRange.contents;
+      if (contents.replace(/[ \r\n]+/g, '').length) {
         if (textStyleRange.appliedCharacterStyle === smallLettersCharacterStyle) {
           textWithoutSmallLetters += " ";
         } else {
-          textWithoutSmallLetters += textStyleRange.contents;
+          // If there are multiple lines, process only the first one
+          // This happends because of the way InDesign handles textStyleRanges
+          var firstLine = contents.replace(/([\r\n]+).*/, '$1');
+          textWithoutSmallLetters += firstLine; 
         }
       }
     }
@@ -153,7 +163,7 @@ function insertPhonetics(selectedStyles) {
       var capitalizedPhonetics = phonetics.charAt(0).toUpperCase() + phonetics.slice(1);
       array.push(capitalizedPhonetics);
     }
-    return array.join("   ");
+    return array.join("   ").replace(/^ +/, ''); // remove leading spaces
   }
   
   function generatePhoneticsFor(inputText) {
