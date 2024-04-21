@@ -36,7 +36,7 @@ function openSettings() {
   var phoneticsDropdown = addStyleDropdown(dialog, 'Phonetics Style', allParagraphStyles, selectedStyles.phonetics);
   var mantraDropdown = addStyleDropdown(dialog, 'Mantra Style (Optional)', [{name: 'None'}].concat(allParagraphStyles), selectedStyles.mantra);
   
-  var smallLettersDropdown = addStyleDropdown(dialog, 'Small Letters Character Style (Optional)', allCharacterStyles, selectedStyles.smallLetters); // Add this line
+  var smallLettersDropdown = addStyleDropdown(dialog, 'Small Letters Character Style (Optional)', [{name: 'None'}].concat(allCharacterStyles), selectedStyles.smallLetters); // Add this line
   
   function setDropdownSelectionWithNoneOption(dropdown, selectedStyle, styles) {
     var selectedIndex = findSelectedIndex(styles, selectedStyle);
@@ -122,7 +122,6 @@ function insertPhonetics(selectedStyles) {
       }
       var insertionPoint = paragraph.insertionPoints.item(-1);
       insertionPoint.contents = "\r";
-      
       var phoneticsParagraph = insertionPoint.paragraphs[0];
       phoneticsParagraph.contents = phonetics + "\r";
       phoneticsParagraph.textStyleRanges[0].appliedCharacterStyle = findStyleByPath('[None]', 'character');
@@ -134,10 +133,12 @@ function insertPhonetics(selectedStyles) {
     var textWithoutSmallLetters = '';
     for (var rangeIndex = 0; rangeIndex < paragraph.textStyleRanges.length; rangeIndex++) {
       var textStyleRange = paragraph.textStyleRanges.item(rangeIndex);
-      if (textStyleRange.appliedCharacterStyle === smallLettersCharacterStyle) {
-        textWithoutSmallLetters += " ";
-      } else {
-        textWithoutSmallLetters += textStyleRange.contents;
+      if (textStyleRange.contents.replace(/[ \r\n]+/g, '').length) {
+        if (textStyleRange.appliedCharacterStyle === smallLettersCharacterStyle) {
+          textWithoutSmallLetters += " ";
+        } else {
+          textWithoutSmallLetters += textStyleRange.contents;
+        }
       }
     }
     return textWithoutSmallLetters;
