@@ -89,6 +89,11 @@ function openSettings() {
 
 function insertPhonetics(selectedStyles) {
   var selection = app.selection[0];
+
+  if (!isPerlAvailable()) {
+    alert('Perl is not available.\n\nInstall perl with "brew install perl" and try again.');
+    return;
+  }
   
   var tibetanStyle = findStyleByPath(selectedStyles.tibetan, 'paragraph');
   var phoneticsStyle = findStyleByPath(selectedStyles.phonetics, 'paragraph');
@@ -193,4 +198,18 @@ function insertPhonetics(selectedStyles) {
     
     return result.replace(/[\r\n]/g, '');
   }
+}
+
+function isPerlAvailable() {
+  var appleScript =
+      'try\r' +
+      '    do shell script "which perl "\r' +
+      '    return true\r' +
+      'on error\r' +
+      '    return false\r' +
+      'end try';
+
+  var isAvailable = app.doScript(appleScript, ScriptLanguage.APPLESCRIPT_LANGUAGE);
+
+  return isAvailable;
 }
