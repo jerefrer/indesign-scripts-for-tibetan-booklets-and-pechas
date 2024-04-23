@@ -1,0 +1,3 @@
+[submodule "InsertPhonetics/lib/tibskrit-transliterator-app"]
+	path = InsertPhonetics/lib/tibskrit-transliterator-app
+	url = https://github.com/jerefrer/tibskrit-transliterator-app.git
