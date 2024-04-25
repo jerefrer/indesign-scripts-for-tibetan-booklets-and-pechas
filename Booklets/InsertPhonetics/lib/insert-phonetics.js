@@ -1,5 +1,5 @@
-#include "./json2.js"
-#include "./shared.js"
+#include "../../lib/json2.js"
+#include "../../lib/styles-utils.js"
 
 var document = app.activeDocument;
 var scriptDirectory = File($.fileName).parent.fsName;
@@ -21,7 +21,7 @@ function openSettings() {
       dropdown.add('item', stylePath);
     }
     if (selectedStyle) {
-      var selectedIndex = findSelectedIndex(styles, selectedStyle);
+      var selectedIndex = findSelectedStyleIndex(styles, selectedStyle);
       if (selectedIndex !== -1) {
         dropdown.selection = selectedIndex;
       }
@@ -39,7 +39,7 @@ function openSettings() {
   var smallLettersDropdown = addStyleDropdown(dialog, 'Small Letters Character Style (Optional)', [{name: 'None'}].concat(allCharacterStyles), selectedStyles.smallLetters); // Add this line
   
   function setDropdownSelectionWithNoneOption(dropdown, selectedStyle, styles) {
-    var selectedIndex = findSelectedIndex(styles, selectedStyle);
+    var selectedIndex = findSelectedStyleIndex(styles, selectedStyle);
     if (selectedIndex !== -1) {
       dropdown.selection = selectedIndex + 1;
     } else {
@@ -198,6 +198,12 @@ function insertPhonetics(selectedStyles) {
     
     return result.replace(/[\r\n]/g, '');
   }
+}
+
+function requiredStylesAreSelected(selectedStyles) {
+  var tibetanExists = selectedStyles.tibetan && findStyleByPath(selectedStyles.tibetan, 'paragraph');
+  var phoneticsExists = selectedStyles.phonetics && findStyleByPath(selectedStyles.phonetics, 'paragraph');
+  return tibetanExists && phoneticsExists;
 }
 
 function isPerlAvailable() {
