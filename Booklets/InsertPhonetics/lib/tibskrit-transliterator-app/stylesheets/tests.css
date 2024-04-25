@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "TibetanMachineUnicode";
+  src: url("../vendor/fonts/TibetanMachineUnicode1.0_0.ttf") format('truetype');
+}
+
+body {
+  padding: 30px;
+  background: #001211;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tibetan {
+  font-family: TibetanChogyalUnicode-170221, TibetanChogyalUnicode-ID, TibetanChogyalUnicode, TibetanMachineUnicode !important;
+  font-size: 36px !important;
+  line-height: 1em !important;
+  vertical-align: middle;
+}
+
+table .header {
+  width: 600px;
+  padding: 15px !important;
+}
+
+.results-group .header {
+  cursor: pointer;
+}
+
+.ui.label.test {
+  margin: 2px;
+  padding: 0 0 0 5px;
+  font-weight: normal;
+  font-family: Calibri;
+}
+.ui.label.test:hover {
+  background: #333 !important;
+  cursor: pointer;
+}
+.ui.label.test .tibetan {
+  display: inline-block;
+  margin-right: 2px;
+}

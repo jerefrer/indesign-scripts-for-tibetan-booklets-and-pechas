@@ -1,0 +1,150 @@
+@font-face {
+  font-family: "TibetanMachineUnicode";
+  src: url("../vendor/fonts/TibetanMachineUnicode1.0_0.ttf") format('truetype');
+}
+
+body {
+  padding: 30px;
+  background: #001211;
+  color: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+#menu {
+  width: 100%;
+  margin-bottom: 2em;
+}
+#menu .inline.fields {
+  justify-content: center;
+}
+#menu .radio {
+  padding: 15px;
+  background: #222;
+  border-radius: 4px;
+}
+#menu .radio:hover {
+  background: #272727;
+  cursor: pointer;
+}
+#menu label {
+  color: rgba(255,255,255,0.9);
+}
+
+
+#scrollable-area-container {
+  position: relative;
+}
+#scrollable-area {
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+.form {
+  display: inline-block;
+  width: 49%;
+}
+
+.form:first-child {
+  margin-right: 1%;
+}
+
+.tibetan {
+  font-family: TibetanChogyalUnicode-170221, TibetanChogyalUnicode-ID, TibetanChogyalUnicode, TibetanMachineUnicode !important;
+  font-size: 36px !important;
+  line-height: 1.1em !important;
+  vertical-align: middle;
+}
+
+textarea {
+  width: 100%;
+  min-height: calc(100vh - 60px) !important;
+  max-height: none !important;
+  margin-top: -15px !important;
+  padding: 45px 30px 30px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  background: #222 !important;
+  border: none !important;
+  overflow: hidden;
+}
+
+textarea.result {
+  font-family: Calibri;
+  font-size: 16px !important;
+  line-height: calc(1.1 * 36px) !important;
+  white-space: pre-wrap;
+  background: white;
+  border: 1px solid rgba(34,36,38,.15);
+  border-radius: 4px;
+}
+
+#tibetan-placeholder {
+  position: absolute;
+  width: 100%;
+  top: 120px;
+  font-size: 20px;
+  color: #777;
+  text-align: center;
+  user-select: none;
+  cursor: text;
+}
+
+#copy-to-clipboard {
+  position: absolute;
+  top: 0px;
+  right: 18px;
+  width: 152px;
+  padding: 10px;
+  color:  rgba(255,255,255,0.7);
+  background: #333;
+  border-bottom-left-radius: 4px;
+  z-index: 999;
+}
+#copy-to-clipboard:hover {
+  color: rgba(255,255,255,0.9);
+  background: #363636;
+  cursor: pointer;
+}
+
+ui.checkbox label,
+ui.checkbox+label {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ui.slider.checkbox input~.box,
+.ui.slider.checkbox input~label {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+.ui.slider.checkbox input:checked~.box,
+.ui.slider.checkbox input:checked~label,
+.ui.slider.checkbox input:focus:checked~.box,
+.ui.slider.checkbox input:focus:checked~label {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.ui.slider.checkbox input:focus:checked~.box:before,
+.ui.slider.checkbox input:focus:checked~label:before {
+  background-color: #545454!important
+}
+.ui[class*="right labeled"].input>input:focus {
+  border-right-color: #333 !important;
+}
+
+.card {
+  background: #222 !important;
+  border-color: rgba(34,36,38,.1) !important;
+  box-shadow: 0 1px 3px 0 rgba(34,36,38,.05), 0 0 0 1px rgba(34,36,38,0.5) !important;
+}
+
+input {
+  color: rgba(255, 255, 255, 0.9) !important;
+  background: #222 !important;
+  border: 1px solid #333 !important;
+}
+input::selection {
+  color: rgba(255, 255, 255, 0.9);
+}
+input:-internal-autofill-selected {
+  background-color: #222 !important;
+}
+.ui.action.input:not([class*="left action"])>input:focus {
+  border-right-color: transparent !important;
+}

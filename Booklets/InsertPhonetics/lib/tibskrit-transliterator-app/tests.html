@@ -1,0 +1,225 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Tibkrit Transliterator: Tests</title>
+  <link rel="shortcut icon" href="favicon.png">
+  <link rel="stylesheet" href="vendor/stylesheets/semantic.min.css">
+  <link rel="stylesheet" href="stylesheets/tests.css">
+  <link rel="stylesheet" href="stylesheets/scrollbar.css">
+  <script src="vendor/javascripts/jquery-3.2.0.min.js"></script>
+  <script src="vendor/javascripts/jquery.scrollTo.js"></script>
+  <script src="vendor/javascripts/clipboard.min.js"></script>
+  <script src="vendor/javascripts/semantic.min.js"></script>
+  <script src="vendor/javascripts/sugar.js"></script>
+  <script src="vendor/javascripts/underscore.min.js"></script>
+  <script src="vendor/javascripts/vue.js"></script>
+  <script src="vendor/javascripts/diff.js"></script>
+  <script src="vendor/javascripts/normalize.js"></script>
+  <script src="../tibetan-normalizer/dist/tibetan-normalizer.umd.js"></script>
+  <script>
+    TibetanNormalizer = TibetanNormalizer.TibetanNormalizer;
+  </script>
+  <script src="javascripts/utils.js"></script>
+  <script src="javascripts/tibkrit-transliterator.js"></script>
+  <script src="tests/var.js"></script>
+  <script src="tests/phonetics/mipham-le-drip-gyü-chö.js"></script>
+  <script src="tests/transliteration/mipham-le-drip-gyü-chö.js"></script>
+  <script src="tests/transliteration/others.js"></script>
+  <script>
+    $(function() {
+      Vue.component('test-diff', {
+        props: {
+          expected: String,
+          actual: String
+        },
+        computed: {
+          parts: function() {
+            return JsDiff.diffChars(this.expected, this.actual);
+          }
+        },
+        template: `
+          <span style="margin-left: 20px; font-size: 1.2em">
+            <span
+              v-for="part in parts"
+              v-bind:style="[part.added ? {color: '#2185d0', 'font-weight': 'bold'} : '', part.removed ? {color: '#db2828', 'font-weight': 'bold'} : '']"
+              >{{part.added || part.removed ? part.value.replace(/ /, '_') : part.value}}</span>
+          </span>
+        `
+      })
+      Vue.component('test-result', {
+        props: {
+          test: Object,
+          sentence: Boolean
+        },
+        computed: {
+          expected: function() {
+            return this.test.result;
+          },
+          actual: function() {
+            return this.test.transliterated;
+          },
+          spanStyle: function() {
+            var s = {};
+            if (!this.sentence) s['width'] = '120px;'
+            else s['display'] = 'block';
+            return s;
+          },
+          tibetanStyle: function() {
+            var s = {};
+            if (!this.sentence) s['width'] = '30px;'
+            return s;
+          }
+        },
+        template: `
+          <span
+            class="ui black label test" v-bind:style="spanStyle"
+            v-on:click="test.runTest()"
+          >
+            <span>
+              <i v-if="test.pending" class="question mark yellow icon"></i>
+              <i v-else-if=" test.pass" class="check green icon"></i>
+              <i v-else-if="!test.pass" class="times red icon"></i>
+            </span>
+            <span class="tibetan">{{test.tibetan}}</span>
+            <test-diff
+              v-if="expected != actual"
+              v-bind:expected="expected"
+              v-bind:actual="actual"
+            ></test-diff>
+          </span>
+        `
+      })
+      Vue.component('results-group', {
+        props: {
+          name: String,
+          pending: Boolean,
+          sentences: Boolean,
+          tests: Array
+        },
+        data: function() {
+          var passedCount = this.tests.count((test) => test.pending || test.pass);
+          var allPassed = passedCount == this.tests.length;
+          return {
+            isPending: allPassed && (this.pending || this.tests.find((test) => test.pending)),
+            allPassed: allPassed,
+            opened: allPassed,
+            passedCount: passedCount,
+            total: this.tests.length
+          }
+        },
+        template: `
+          <tr
+            class="ui inverted segment results-group">
+            <td class="header"
+              v-on:click="opened=!opened"
+            >
+              {{name}}
+            </td>
+            <td class="count">{{passedCount}}/{{total}}</td>
+            <td class="result">
+              <i v-if="isPending" class="question mark yellow icon"></i>
+              <i v-else-if=" allPassed" class="check green icon"></i>
+              <i v-else-if="!allPassed" class="times red icon"></i>
+            </td>
+            <td>
+              <test-result
+                v-if="!opened"
+                v-for="(test, index) in tests"
+                v-bind:sentence="sentences"
+                v-bind:test="test"
+                v-bind:key="index"
+              >
+              </test-result>
+            </td>
+          </tr>
+        `
+      })
+      new Vue({
+        el: '#main',
+        data: function() {
+          var passedCount = 0;
+          var pendingCount = 0;
+          var ranTests = testGroups.map(function(testGroup) {
+            testGroup.tests.each(function(test) {
+              test.runTest = function() {
+                var options = { phonetics: testGroup.phonetics };
+                this.transliterated = new TibkritTransliterator(this.tibetan).transliterate(options);
+                return this.transliterated == this.result;
+              }
+              test.pass = test.runTest();
+              if (test.pass || test.pending)
+                passedCount++;
+              if (testGroup.pending || test.pending)
+                pendingCount++;
+            })
+            return testGroup;
+          });
+          var total = _(testGroups).pluck('tests').flatten().length;
+          return {
+            testGroups: ranTests,
+            passedCount: passedCount,
+            pendingCount: pendingCount,
+            total: total,
+            percentage: passedCount / total * 100,
+          };
+        },
+        computed: {
+          style: function() {
+            return {
+              color:
+                this.passedCount == this.total
+                ? this.pendingCount > 0 ? '#fbbd08' : '#21ba45'
+                : '#db2828'
+            }
+          }
+        },
+        mounted () {
+          setTimeout(() => {
+            var firstErrorIcon = $('.test.label .red.icon').first();
+            if (firstErrorIcon.lenth) {
+              firstErrorLabel = firstErrorIcon.parents('.test.label');
+              $.scrollTo(firstErrorLabel, 300, { offset: -100 });
+            }
+          }, 300);
+        },
+        template: `
+          <div>
+            <table class="ui inverted definition table">
+              <thead>
+                <tr>
+                  <td class="ui inverted header">
+                    Total:&nbsp;
+                    <span v-bind:style="style">
+                      {{percentage.toPrecision(3)}}%
+                      (
+                        {{passedCount}}/{{total}}
+                        <span v-if="pendingCount > 0">
+                          , {{pendingCount}} pending
+                        </span>
+                      )
+                    </span>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <results-group
+                 v-for="(testGroup, index) in testGroups"
+                 :key="index"
+                 :name="testGroup.name"
+                 :pending="testGroup.pending"
+                 :sentences="testGroup.sentences"
+                 :tests="testGroup.tests">
+                </results-group>
+              </tbody>
+            </table>
+          </div>
+        `
+      })
+    })
+  </script>
+  <style>
+  </style>
+  <body>
+    <div id="main" class="ui container"></div>
+  </body>
+</html>

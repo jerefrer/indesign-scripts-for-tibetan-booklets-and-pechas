@@ -1,0 +1,59 @@
+.compare.ui.container {
+  width: 94vw;
+}
+
+.compare #scrollable-area .form {
+  padding: 15px 0;
+}
+
+.compare #scrollable-area .form {
+  display: inline-block;
+  width: 32.27%;
+  margin-right: 1%;
+  vertical-align: top;
+}
+
+.compare #tibetan,
+.compare #diff-lines {
+  padding: 15px 30px !important;
+}
+
+.compare #diff-lines,
+.compare #existing {
+  margin: -15px 0 !important;
+  font-family: monospace;
+  border-radius: 4px;
+}
+
+.compare #existing {
+  padding: 15px 30px !important;
+}
+
+.compare #diff-lines {
+  background: #222;
+}
+
+.compare #diff-lines .line,
+.compare #existing {
+  font-size: 14px !important;
+  line-height: 36px;
+}
+
+.compare #existing span[style] {
+  cursor: pointer;
+}
+
+#tibetan {
+  font-family: TibetanChogyalUnicode-170221, TibetanChogyalUnicode-ID, TibetanChogyalUnicode, TibetanMachineUnicode !important;
+  font-size: 36px;
+  line-height: 1em;
+}
+
+.form:last-child {
+  margin-right: 0 !important;
+}
+
+textarea {
+  white-space: nowrap;
+  overflow: auto;
+}
