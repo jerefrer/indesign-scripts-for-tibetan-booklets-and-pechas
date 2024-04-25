@@ -1,6 +1,6 @@
 # indesign-scripts-for-tibetan-booklets-and-pechas
 
-A collection of InDesign scripts to help working with Tibetan booklts and pechas.
+A collection of InDesign scripts to help working with Tibetan booklets and pechas.
 
 ### Add Rinchen Spung Shad
 
