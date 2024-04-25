@@ -16,8 +16,13 @@ if (app.selection.length > 0 && (app.selection[0].hasOwnProperty('parentStory') 
     makeAllSpacesUnbreakable(currentStory)
     makeHardTshegsAfterNgas(currentStory);
 
-
-    alert("Document processing complete.");
+    alert(
+        "Document processing completed.\n\n" +
+        "However this script can still omit to put space between some groups.\n" +
+        "To help fixing them this search & replace is perfect, but it still needs to be done manually:\n" +
+        "Search: ([^  ་༌]+)།([^།  ་༌]+)\n" +
+        "Replace: $1། $2"
+    );
 } else {
     alert("Please place the cursor inside text or make a text selection.");
 }
