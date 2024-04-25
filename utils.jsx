@@ -29,13 +29,15 @@ function getObjectProperties (object) {
 
 
 function tibetanNumber (number) {
-  if (typeof(number) == 'number') {
+  if (typeof (number) == 'number') {
     var digits = number.toString().split('');
-    return digits.map(function(digit) {
-        return tibetanNumber(digit.toInt());
-    }).join('');
+    var tibetanDigits = '';
+    for (var i = 0; i < digits.length; i++) {
+      tibetanDigits += tibetanNumber(digits[i]);
+    }
+    return tibetanDigits;
   } else {
-    switch(number) {
+    switch (number) {
       case '0': return '༠'; break;
       case '1': return '༡'; break;
       case '2': return '༢'; break;
