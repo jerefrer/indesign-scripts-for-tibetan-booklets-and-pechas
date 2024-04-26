@@ -2,30 +2,15 @@
 
 A collection of InDesign scripts to help working with Tibetan booklets and pechas.
 
-### Add Rinchen Spung Shad
-
-Removes all *rinchen spung shad* (the *shad* with the three jewels on top)
-from the text, then adds them where it is necessary.
-
-### Make Hard Tshegs After Ngas
-
-Turns the *tshegs* (the dots between syllables) that follow a *nga* into
-non-breakable *tshegs*.
-
-### Remove Extra Tshegs
-
-Replaces all sections with multiple consecutive *tshegs* into a single
-*tshegs*.
-
 ### Booklets / Insert Phonetics
 
-Inserts automatically generated phonetics below each line of Tibetan.
+![Insert Phonetics](docs/Insert%20Phonetics.gif)
+
 Works either on the whole document or just the current selection.
 
-### Booklets / Apply Rotating Styles
+### Booklets / Interweave Lines From Files
 
-Applies rotating styles paragraph by paragraph.
-For instance: Tibetan / Phonetics / Translation / Tibetan / Phonetics / Translation / ...
+![Interweave Lines From Files](docs/Interweave%20Lines%20From%20Files.gif)
 
 ### Booklets / Tibetan Only / Add Section Title Frame
 
@@ -44,3 +29,18 @@ of section titles and *karchag* (table of contents).
 ### Pechas / Generate Karchag (WIP)
 
 Auto-generation of the *karchag* (table of contents).
+
+### Pechas / Add Rinchen Spung Shad
+
+Removes all *rinchen spung shad* (the *shad* with the three jewels on top)
+from the text, then adds them where it is necessary.
+
+### Make Hard Tshegs After Ngas
+
+Turns the *tshegs* (the dots between syllables) that follow a *nga* into
+non-breakable *tshegs*.
+
+### Remove Extra Tshegs
+
+Replaces all sections with multiple consecutive *tshegs* into a single
+*tshegs*.
