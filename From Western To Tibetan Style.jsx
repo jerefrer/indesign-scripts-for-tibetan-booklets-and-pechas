@@ -1,4 +1,18 @@
-var myDocument = app.activeDocument;
+#include "../lib/polyfills.js"
+#include "../lib/styles-utils.js"
+
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+// TODO
+//////////////////////////////////////////////
+// Beware of space missing after ter tshegs
+// Try to auto do it again from the original, and check between 6.1 and 6.2
+// For instance end of miyo kasung beginning of nge nu ma
+//////////////////////////////////////////////
+//////////////////////////////////////////////
+
+var doc = app.activeDocument;
 
 // Check if there is a text cursor or a text selection
 if (app.selection.length > 0 && (app.selection[0].hasOwnProperty('parentStory') || app.selection[0].hasOwnProperty('insertionPoints'))) {
@@ -10,21 +24,23 @@ if (app.selection.length > 0 && (app.selection[0].hasOwnProperty('parentStory') 
     } else if (app.selection[0].hasOwnProperty('insertionPoints')) {
         currentStory = app.selection[0].insertionPoints[0].parentStory;
     }
-
-    removeNewLines(currentStory);
-    addSpaceAfterTsheg(currentStory);
-    makeAllSpacesUnbreakable(currentStory)
-    makeHardTshegsAfterNgas(currentStory);
-
-    alert(
-        "Document processing completed.\n\n" +
-        "However this script can still omit to put space between some groups.\n\n" +
-        "To help fixing them this search & replace is perfect, but it still needs to be done manually to avoid mistakes:\n\n" +
-        "Search: ([^  ་༌]+)།([^།  ་༌]+)\n" +
-        "Replace: $1། $2"
-    );
+    processStory(currentStory);
 } else {
-    alert("Please place the cursor inside text or make a text selection.");
+    var stories = doc.stories;
+    for (var i = 0; i < stories.length; i++) {
+        var currentStory = stories[i];
+        processStory(currentStory);
+    }
+}
+
+function processStory(story) {
+    removeAllTranslations(story);
+    changeTitleStyleToYigChung(story);
+    removeNewLines(story);
+    addSpaceAfterTsheg(story);
+    makeAllSpacesUnbreakable(story)
+    makeHardTshegsAfterNgas(story);
+    addNewLinesBeforeSections(story);
 }
 
 // Function to remove new lines in the given story
@@ -37,8 +53,18 @@ function removeNewLines(myStory) {
         // Check if the last character is a paragraph symbol; if so, join paragraphs
         var lastChar = currentParagraph.characters.lastItem();
         if (lastChar.contents === '\r') {
-            // Join this paragraph with the next one without losing styling
-            lastChar.remove();
+            // Check if the last character is a paragraph symbol; if so, join paragraphs
+            var secondToLastChar = currentParagraph.characters.item(-2);
+            if (secondToLastChar && secondToLastChar.isValid) {
+                if (!currentParagraph.contents.match(/།[  ]།\r$/) && !secondToLastChar.contents.match(/[  ]/)) {
+                    currentParagraph.contents += ' ';
+                }
+            }
+            var lastChar = currentParagraph.characters.lastItem();
+            if (lastChar.contents === '\r') {
+                // Join this paragraph with the next one without losing styling
+                lastChar.remove();
+            }
         }
     }
 }
@@ -85,4 +111,43 @@ function makeAllSpacesUnbreakable(myStory) {
     app.findGrepPreferences.findWhat=" ";
     app.changeGrepPreferences.changeTo=" ";
     myStory.changeGrep();
+}
+
+function addNewLinesBeforeSections(myStory) {
+    app.findGrepPreferences = app.changeGrepPreferences = null;
+
+    app.findGrepPreferences.findWhat="༄༅།";
+    app.changeGrepPreferences.changeTo="\r༄༅།";
+    myStory.changeGrep();
+}
+
+function changeTitleStyleToYigChung(myStory) {
+    app.findGrepPreferences = app.changeGrepPreferences = null;
+    app.findGrepPreferences.appliedParagraphStyle = findStyleByPath("TIBETANO - estilos/TIBETANO - TITULO", 'paragraph');
+    app.changeGrepPreferences.appliedParagraphStyle = findStyleByPath("TIBETANO - estilos/TIBETANO PEQUENO", 'paragraph');
+    myStory.changeGrep();
+}
+
+function removeAllTranslations(myStory) {
+    app.findGrepPreferences = app.changeGrepPreferences = null;
+    var styles = [
+        "FONÉTICAS/FONÉTICA",
+        "ENGLISH/EN - HEADING 1",
+        "ENGLISH/EN - HEADING 2",
+        "ENGLISH/EN - HEADING 3",
+        "ENGLISH/EN - HEADINGS 3 under Heading",
+        "ENGLISH/EN - TRANSLATION",
+        "ENGLISH/EN - TRANSLATION - instructions",
+        "ENGLISH/EN - TRANSLATION - commentary-verses",
+        "PORTUGUÊS/PT - HEADING 1",
+        "PORTUGUÊS/PT - HEADING 2",
+        "PORTUGUÊS/PT - HEADING 3",
+        "PORTUGUÊS/PT - TRADUÇÃO",
+        "PORTUGUÊS/PT - TRADUÇÃO - comentário",
+    ];
+    styles.each(function(stylePath) {
+        app.findGrepPreferences.appliedParagraphStyle = findStyleByPath(stylePath, 'paragraph');
+        app.changeGrepPreferences.changeTo="";
+        myStory.changeGrep();
+    });
 }
