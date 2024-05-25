@@ -1,21 +1,21 @@
 ﻿#include '../../lib/utils.jsx';
 
-var pageOffset = 5;
+var pageOffset = 3;
 
 var doc = app.activeDocument;
 var sectionTitleStyle = doc.paragraphStyles.itemByName("Running head TIB");
 
-function createHyperlink(doc, sourceText, destinationText, name) {
-    var nextChar = sourceText.characters[sourceText.characters.length - 1].insertionPoints[0];
-    var hyperlinkSource = doc.hyperlinkTextSources.add(destinationText);
-    var hyperlinkDestination = doc.hyperlinkTextDestinations.add(nextChar);
+function createHyperlink(doc, destination, source, name) {
+    var destinationNextChar = destination.characters[destination.characters.length - 1].insertionPoints[0];
+    var hyperlinkSource = doc.hyperlinkTextSources.add(source);
+    var hyperlinkDestination = doc.hyperlinkTextDestinations.add(destinationNextChar);
     doc.hyperlinks.add(hyperlinkSource, hyperlinkDestination, {
         name: name,
         visible: true
     });
 }
 
-function createBookmark(doc, text, name) {
+function createBookmark(doc, text) {
     var bookmarkDestination = doc.hyperlinkTextDestinations.add(text);
     doc.bookmarks.add(bookmarkDestination);
 }
@@ -67,9 +67,17 @@ for (var j = 0; j < anchoredItems.length; j++) {
 
         var insertionPoint = tocFrame.insertionPoints.lastItem();
         insertionPoint.contents = "\r";
-        var tocParagraph = insertionPoint.paragraphs[0];
         var pageNumber = parseInt(anchoredItem.parent.parentTextFrames[0].parentPage.name) - pageOffset;
-        tocFrame.contents += tibetanNumber(pageNumber) + '\t' + sectionTitle;
+        var pageNumberInTibetan = false;
+        if (pageNumberInTibetan) {
+            pageNumber = tibetanNumber(pageNumber);
+            tocFrame.contents += pageNumber + '\t' + sectionTitle;
+        } else {
+            var pageNumberText = tocFrame.insertionPoints[-1].contents = pageNumber + '\t';
+            var pageNumberRange = tocFrame.characters.itemByRange(tocFrame.characters.length - pageNumberText.length, tocFrame.characters.length - 2); // -2 to exclude the tab character
+            pageNumberRange.appliedCharacterStyle = app.activeDocument.characterStyles.item("Page number in karchag");
+            tocFrame.insertionPoints[-1].contents = sectionTitle;
+        }
         createHyperlink(doc, parentCharacter, tocFrame.paragraphs.lastItem(), sectionTitle);
 
         if (j == anchoredItems.length - 1) {
@@ -86,7 +94,7 @@ for (var j = 0; j < anchoredItems.length; j++) {
 }
 
 // Remove the first new line inserted at the beginning to help build paragraphs
-tocFrame.contents = tocFrame.contents.substr(1);
+tocFrame.characters.firstItem().remove();
 
 // We need to create and then remove DUMMY BOOKMARK.
 // Without this the last is named "Anchor N".
