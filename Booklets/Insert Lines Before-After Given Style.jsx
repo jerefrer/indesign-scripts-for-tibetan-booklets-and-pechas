@@ -3,7 +3,7 @@
 
 function createUI() {
     var doc = app.activeDocument;
-    var dialog = new Window('dialog', 'Insert Text at Style Location');
+    var dialog = new Window('dialog', 'Insert Lines Before/After Given Style');
     
     var scriptLabel = document.extractLabel("options");
     var options = scriptLabel ? JSON.parse(scriptLabel) : {};
