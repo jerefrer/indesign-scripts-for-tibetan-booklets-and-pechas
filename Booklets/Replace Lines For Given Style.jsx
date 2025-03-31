@@ -57,25 +57,54 @@ function replaceStyledParagraphs(doc, targetStyle, linesToPaste) {
     if (selection && selection.hasOwnProperty('paragraphs')) {
         var paragraphs = selection.paragraphs;
         var eligibleParagraphsCount = 0;
+        var eligibleParagraphs = [];
         
+        // First, collect all eligible paragraphs
         for (var i = 0; i < paragraphs.length; i++) {
-            if (paragraphs[i].appliedParagraphStyle === targetStyle && paragraphs[i].contents.replace(/[ \n\r]/g, '').length) {
+            if (paragraphs[i].appliedParagraphStyle === targetStyle && 
+                paragraphs[i].contents.replace(/[ \n\r]/g, '').length) {
                 eligibleParagraphsCount++;
+                eligibleParagraphs.push({
+                    paragraph: paragraphs[i],
+                    index: i,
+                    nextStyle: (i < paragraphs.length - 1) ? paragraphs[i + 1].appliedParagraphStyle : null
+                });
             }
         }
         
         if (eligibleParagraphsCount !== linesToPaste.length) {
-            alert("The number of lines to paste does not match the number of target paragraphs. Expected " + eligibleParagraphsCount + " lines, but got " + linesToPaste.length + ".");
+            alert("The number of lines to paste does not match the number of target paragraphs. Expected " + 
+                  eligibleParagraphsCount + " lines, but got " + linesToPaste.length + ".");
             return;
         }
         
-        var lineIndex = linesToPaste.length - 1;
-        for (var j = selection.paragraphs.length; j >= 0; --j) {
-            var paragraph = selection.paragraphs[j];
-            if (paragraph.isValid && paragraph.appliedParagraphStyle === targetStyle && paragraph.contents.replace(/[ \n\r]/g, '').length) {
-                paragraph.contents = linesToPaste[lineIndex] + "\r";
-                lineIndex--;
+        app.scriptPreferences.enableRedraw = false;
+        
+        try {
+            // Process in reverse order
+            for (var j = eligibleParagraphs.length - 1; j >= 0; j--) {
+                var paragraphInfo = eligibleParagraphs[j];
+                var paragraph = paragraphInfo.paragraph;
+                
+                if (paragraph.isValid) {
+                    // Store the start and end of this paragraph
+                    var startIndex = paragraph.insertionPoints[0].index;
+                    var endIndex = paragraph.insertionPoints[-1].index;
+                    
+                    // Replace content in a single operation, keeping the paragraph break
+                    paragraph.contents = linesToPaste[j] + "\r";
+                    
+                    // If there's a next paragraph, ensure it starts at endIndex + 1
+                    if (paragraphInfo.nextStyle && paragraphInfo.index < paragraphs.length - 1) {
+                        var nextParagraph = paragraphs[paragraphInfo.index + 1];
+                        if (nextParagraph.isValid) {
+                            nextParagraph.appliedParagraphStyle = paragraphInfo.nextStyle;
+                        }
+                    }
+                }
             }
+        } finally {
+            app.scriptPreferences.enableRedraw = true;
         }
         
     } else {

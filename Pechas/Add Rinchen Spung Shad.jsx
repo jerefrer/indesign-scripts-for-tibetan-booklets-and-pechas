@@ -19,8 +19,8 @@ var i = 0;
 var progressBar = new $.ProgressBar("Rinchen Spung Shad", 350, 100);
 progressBar.show("Processing line %1 / " + allLines.length, allLines.length, i);
 
-// var regexp = /^\uFEFF?([^་༌།༔  ]+[་༌]?)།([^།])/; // Any syllable followed by shed
-var regexp = /^\uFEFF?^([ཀཁགངཅཆཇཉཏཊཐཋདཌནཎཔཕབམཙཚཛཝཞསའཡརཤཥཟཧཨ][ཱ]?[ེིོུ]?[ཾྃྂ]?[་༌]?)།([^།])/; // Single "column" syllable followed by shed
+var regexp = /^\uFEFF?([^་༌།༔   ]+[་༌]?)།([^།])/; // Any syllable followed by shed
+// var regexp = /^\uFEFF?^([ཀཁགངཅཆཇཉཏཊཐཋདཌནཎཔཕབམཙཚཛཝཞསའཡརཤཥཟཧཨ][ཱ]?[ེིོུ]?[ཾྃྂ]?[་༌]?)།([^།])/; // Single "column" syllable followed by shed
 
 for(; i < allLines.length; i++) {
     var line = allLines[i];
