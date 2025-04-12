@@ -1,5 +1,5 @@
-#include "./json2.js"
-#include "./shared.js"
+#include "../../lib/json2.js"
+#include "../../lib/styles-utils.js"
 
 var scriptDirectory = File($.fileName).parent.fsName;
 
@@ -51,7 +51,7 @@ function generateIASTFor(tibetan, isPhonetics) {
   inputFile.close();
 
   var appleScript =
-  'set nodePath to "/Users/jeremyfrere/.nvm/versions/node/v21.6.1/bin/node"\r' +
+  'set nodePath to "/opt/homebrew/bin/node"\r' +
   'set command to nodePath & " ' + scriptDirectory + '/tibskrit-transliterator-cli.js /tmp/mantras_input.txt ' + (isPhonetics ? 'true' : 'false') + '"\r' +
   'set output to do shell script command\r' +
   'return output\r';
