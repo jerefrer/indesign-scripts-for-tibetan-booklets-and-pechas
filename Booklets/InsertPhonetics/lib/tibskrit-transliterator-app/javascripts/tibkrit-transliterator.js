@@ -440,8 +440,10 @@ var replacementMap = [
   { tibetan: "ཤོ་?དྷ་ཡ", transliteration: "śodhaya", phonetics: "shodhaya" },
   { tibetan: "ཤོ་?དྷ", transliteration: "śodha", phonetics: "shodha" },
   { tibetan: "བི་ཤུད་དྷ", transliteration: "viśuddha", phonetics: "vishuddha" },
+  { tibetan: "ཤུཿ", transliteration: "śuddhva", phonetics: "shuddha" },
   { tibetan: "ཤུདྡྷྭ", transliteration: "śuddhva", phonetics: "shuddha" },
   { tibetan: "ཤུ[་]?དྡྷ", transliteration: "śuddha", phonetics: "shuddha" },
+  { tibetan: "ཤུདྡྷྭོཿ", transliteration: "śuddhoḥ", phonetics: "shuddho" },
   { tibetan: "ཤུད་དྷ", transliteration: "śuddha", phonetics: "shuddha" },
   {
     tibetan: "ཨ་དྷིཥྛི་ཏ",
@@ -456,6 +458,7 @@ var replacementMap = [
   { tibetan: "ནི་རྡེ", transliteration: "nirdé" },
   { tibetan: "ནི་བི་ཤ", transliteration: "niviśa", phonetics: "nivisha" },
   { tibetan: "ནི་ནི་མཿ", transliteration: "ninimaḥ" },
+  { tibetan: "ཀ་མ་ལ", transliteration: "kamala" },
   {
     tibetan: "ཨ་ཝ་ལོ་ཀི་ཏེ་ཤྭ་ར",
     transliteration: "avalokitéśvara",
@@ -623,6 +626,7 @@ var replacementMap = [
   { tibetan: "དྷཱ་ཀི་ནཱི་", transliteration: "ḍākinī" },
   { tibetan: "དྷཱ་ཀི་ནི", transliteration: "ḍākini" },
   { tibetan: "དྷཱ་གི་ནི", transliteration: "ḍākini" },
+  { tibetan: "ཌཱ་ཀི་ནཱི", transliteration: "ḍākini" },
   { tibetan: "དྷརྨ་པཱ་ལ", transliteration: "dharmapāla" },
   { tibetan: "དྷརྨཱ་ཎཱཾ་", transliteration: "dharmāṇāṁ" },
   {
@@ -768,6 +772,7 @@ var replacementMap = [
   { tibetan: "ཎི་བི", transliteration: "ṇivi" },
   { tibetan: "ག་ཏ", transliteration: "gata" },
   { tibetan: "རཱ་ག", transliteration: "rāga" },
+  { tibetan: "མེ་གྷ", transliteration: "mégha" },
   { tibetan: "སེང་ཧ", transliteration: "sengha" },
   { tibetan: "སེང", transliteration: "seng" },
   { tibetan: "མུ་ཁ", transliteration: "mukha" },
