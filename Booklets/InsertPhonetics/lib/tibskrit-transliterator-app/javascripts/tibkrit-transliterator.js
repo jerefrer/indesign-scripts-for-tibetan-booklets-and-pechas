@@ -111,6 +111,10 @@ var replacementMap = [
     tibetan: "ཨརྒྷཾ་སོགས།",
     transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
+  {
+    tibetan: "པུཥྤེ་ནས། ཤབྡ་",
+    transliteration: "puṣpe dhūpe āloke gandhe naivedye śabda",
+  },
   { tibetan: "བིགྷྣཱཀྞ", transliteration: "bighnān", phonetics: "bighanen" },
   { tibetan: "བིན", transliteration: "bighnān", phonetics: "bighanen" },
   { tibetan: "བིགྷྣཱན", transliteration: "bighnān", phonetics: "bighanen" },
