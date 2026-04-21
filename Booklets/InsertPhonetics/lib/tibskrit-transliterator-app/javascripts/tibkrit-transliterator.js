@@ -303,23 +303,23 @@ var replacementMap = [
   },
   {
     tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?སོགས་ནས། ཤ(པྟ|བྡ)",
-    transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
+    transliteration: "arghaṁ pādyaṁ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
     tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?སོགས། ཤ(པྟ|བྡ)",
-    transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
+    transliteration: "arghaṁ pādyaṁ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
     tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?ནས[་། ]+ཤ(པྟ|བྡ)",
-    transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
+    transliteration: "arghaṁ pādyaṁ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
     tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?སོགས་ཀྱིས་མཆོད།",
-    transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
+    transliteration: "arghaṁ pādyaṁ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
     tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?སོགས།",
-    transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
+    transliteration: "arghaṁ pādyaṁ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
     tibetan: "པུཥྤེ་ནས། ཤ(པྟ|བྡ)",
@@ -629,7 +629,7 @@ var replacementMap = [
   { tibetan: "ན་མ", transliteration: "nama" },
   { tibetan: "ཨ་ཧ་རི་ནི་ས", transliteration: "a ha ri ni sa" },
   { tibetan: "ཧ་ར", transliteration: "hara" },
-  { tibetan: "ཁ་རཾ", transliteration: "kharaṃ" },
+  { tibetan: "ཁ་རཾ", transliteration: "kharaṁ" },
   {
     tibetan: "བྷ་ག་ཝ་ཏེ",
     transliteration: "bhagavaté",
