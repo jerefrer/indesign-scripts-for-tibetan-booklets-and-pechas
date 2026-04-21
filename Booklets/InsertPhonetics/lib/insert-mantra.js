@@ -24,8 +24,7 @@ function insertMantra(isPhonetics) {
   
   function processParagraph(paragraph, isPhonetics) {  
     var followingParagraph = paragraph.insertionPoints.item(-1).paragraphs[0];
-    // if (paragraph.appliedParagraphStyle === tibetanStyle && (!followingParagraph.isValid || followingParagraph.appliedParagraphStyle !== mantraStyle)) {
-    if (paragraph.appliedParagraphStyle === tibetanStyle) {
+    if (paragraph.appliedParagraphStyle === tibetanStyle && (!followingParagraph.isValid || followingParagraph.appliedParagraphStyle !== mantraStyle)) {
       var transliteration = generateIASTFor(paragraph.contents, isPhonetics).replace(/[\r\n]/g, '');
       if (transliteration.replace(/\s/g, '').length === 0) {
         return;

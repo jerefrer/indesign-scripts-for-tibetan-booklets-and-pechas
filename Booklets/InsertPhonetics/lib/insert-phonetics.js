@@ -121,7 +121,7 @@ function insertPhonetics(selectedStyles) {
   function processParagraph(paragraph) {
     var lines = paragraph.lines;
     var followingParagraph = paragraph.insertionPoints.item(-1).paragraphs[0];
-    if (paragraph.appliedParagraphStyle === tibetanStyle && (!followingParagraph.isValid || followingParagraph.appliedParagraphStyle !== mantraStyle)) {
+    if (paragraph.appliedParagraphStyle === tibetanStyle && (!followingParagraph.isValid || (followingParagraph.appliedParagraphStyle !== mantraStyle && followingParagraph.appliedParagraphStyle !== phoneticsStyle))) {
       var phonetics = generatePhoneticsForEachGroupSplitBySpace(ignoreSmallLetters(paragraph));
       if (phonetics.replace(/\s/g, '').length === 0) {
         return;
