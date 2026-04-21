@@ -15,7 +15,15 @@ var TibkritTransliterator = function (tibetan) {
           new RegExp("(" + word.tibetan + "[^་།༑༔]*)་ནཱཾ", "g"),
           options.phonetics ? "$1་^^^nam" : "$1་^^^nāṁ",
         );
-        if (replacement.last() == "a") {
+        // The inherent-'a' logic below only makes sense for single-syllable
+        // Sanskrit words where the final 'a' should be dropped unless the
+        // syllable is followed by a terminator. Abbreviation expansions are
+        // multi-word phrases (e.g. "puṣpe dhūpe āloke gandhe naivedye śabda")
+        // whose final 'a' is always part of the last word's spelling and must
+        // not be context-stripped. We detect expansions by the presence of a
+        // space in the replacement string.
+        var isAbbreviationExpansion = replacement.indexOf(" ") !== -1;
+        if (replacement.last() == "a" && !isAbbreviationExpansion) {
           replacement = replacement.slice(0, -1);
           replaced = replaced.replace(
             new RegExp("(" + word.tibetan + ")ཱ་ཡ་", "g"),
@@ -683,8 +691,8 @@ var replacementMap = [
   { tibetan: "བ་སུ་དེ", transliteration: "vasudé" },
   { tibetan: "ཤྭ་རཱི", transliteration: "śvarī", phonetics: "shvari" },
   { tibetan: "ཤྭ་ར", transliteration: "śvara", phonetics: "shvara" },
-  { tibetan: "སཱ་དྷ་ཡ", transliteration: "sādhaya" },
-  { tibetan: "སཱ་དྷ་ན", transliteration: "sādhana" },
+  { tibetan: "སཱ་དྷ་?ཡ", transliteration: "sādhaya" },
+  { tibetan: "སཱ་དྷ་?ན", transliteration: "sādhana" },
   { tibetan: "ཨ་ཀ་ཡ", transliteration: "akarśaya", phonetics: "akarshaya" },
   { tibetan: "ཨ་ཀཱ་ར", transliteration: "akāra" },
   { tibetan: "ཏྭཏ", transliteration: "tvata" },
@@ -867,7 +875,6 @@ var replacementMap = [
   { tibetan: "པ་ཙ", transliteration: "paca", phonetics: "pacha" },
   { tibetan: "ཎི་བི", transliteration: "ṇivi" },
   { tibetan: "ག་ཏ", transliteration: "gata" },
-  { tibetan: "དྷ་ན", transliteration: "dhana" },
   { tibetan: "བྷསྨ", transliteration: "bhasma" },
   { tibetan: "ཨ་ཙཱ་ལ་", transliteration: "acāla" },
   { tibetan: "གྲུ་བུ་གྲུ", transliteration: "grubugru" },
@@ -929,8 +936,9 @@ var replacementMap = [
   { tibetan: "བ་ལིངྟ་", transliteration: "baliṁta", phonetics: "balingta" },
   { tibetan: "ཧཱུྃ་ཀཱ་ར་", transliteration: "hūṁkāra", phonetics: "hungkara" },
   { tibetan: "ཤ་ཏྲུཾ", transliteration: "śatruṁ", phonetics: "shatrum" },
-  { tibetan: "ཀྲོ་?དྷ", transliteration: "krodha" },
-  { tibetan: "ཀྲོ་?དྡྷ", transliteration: "krodha" },
+  { tibetan: "ཀྲོ་?(དྷ|དྡྷ)་ན", transliteration: "krodhana" },
+  { tibetan: "ཀྲོ་?(དྷ|དྡྷ)", transliteration: "krodha" },
+  { tibetan: "དྷ་ན", transliteration: "dhana" },
   { tibetan: "ཧྱ་གྷྲྀ་ཝ", transliteration: "hayaghṛva", phonetics: "hayagriva" },
   {
     tibetan: "ཧྱ་གྲྀ་ཝ་",
@@ -987,6 +995,8 @@ var replacementMap = [
   { tibetan: "ཨུཏྐ་", transliteration: "utka" },
   { tibetan: "སྥུ་རུ", transliteration: "sphuru" },
   { tibetan: "ཨརྠ་", transliteration: "artha" },
+  { tibetan: "ནཱ་ག", transliteration: "nāga" },
+  { tibetan: "ཨ་དྷི་པ་ཏི", transliteration: "adhipati" },
   { tibetan: "ཁངྒ་", transliteration: "khanga" },
   { tibetan: "གཽ་རོ", transliteration: "gauro" },
   { tibetan: "ཀན", transliteration: "kan" },
