@@ -932,6 +932,12 @@ var replacementMap = [
     phonetics: "praticha",
   },
   { tibetan: "པུ་ཛ་", transliteration: "puja" },
+  {
+    tibetan: "ཤྨ་ཤཱ་ན་པ་ཏི",
+    transliteration: "śmaśānapati",
+    phonetics: "shmashanapati",
+  },
+  { tibetan: "ཤྨ་ཤཱ་ན", transliteration: "śmaśāna", phonetics: "shmashana" },
   { tibetan: "ཨུཙྪིཥྚ་", transliteration: "ucchiṣta", phonetics: "uchishta" },
   { tibetan: "བ་ལིངྟ་", transliteration: "baliṁta", phonetics: "balingta" },
   { tibetan: "ཧཱུྃ་ཀཱ་ར་", transliteration: "hūṁkāra", phonetics: "hungkara" },
