@@ -12,7 +12,17 @@ function insertMantra(isPhonetics) {
   
   var tibetanStyle = findStyleByPath(selectedStyles.tibetan, 'paragraph');
   var mantraStyle = selectedStyles.mantra ? findStyleByPath(selectedStyles.mantra, 'paragraph') : null;
+  var phoneticsStyle = selectedStyles.phonetics ? findStyleByPath(selectedStyles.phonetics, 'paragraph') : null;
   var smallLettersCharacterStyle = selectedStyles.smallLetters ? findStyleByPath(selectedStyles.smallLetters, 'character') : null;
+
+  // Double-press detection: if the user triggers the script again within
+  // 2 seconds, force-regenerate IAST for paragraphs that already have one.
+  var DOUBLE_PRESS_WINDOW_MS = 2000;
+  var now = new Date().getTime();
+  var lastInvocationLabel = document.extractLabel("lastMantraIASTInvocationAt");
+  var lastInvocation = lastInvocationLabel ? parseInt(lastInvocationLabel, 10) : 0;
+  var forceRegenerate = lastInvocation > 0 && (now - lastInvocation) < DOUBLE_PRESS_WINDOW_MS;
+  document.insertLabel("lastMantraIASTInvocationAt", String(now));
 
   // Patterns where small-letters segments must be kept so the transliterator
   // can expand the abbreviation (e.g. "arghaṁ pādyaṃ puṣpe ... śabda").
@@ -24,34 +34,53 @@ function insertMantra(isPhonetics) {
     /ཨརྒྷཾ་སོགས་ཀྱིས་མཆོད།/,
     /ཨརྒྷཾ་སོགས།/,
     /པུཥྤེ་ནས[་། ]+ཤབྡ/,
-    /པུཥྤེ་ནས[་། ]+ཤཔྟ/
+    /པུཥྤེ་ནས[་། ]+ཤཔྟ/,
+    /སྭ་བྷཱ་ཝས་སྦྱང/,
+    /(སུཾ|སུམ)་(བྷ|བྷ)་ནི(ས་སྦྱང|་སོགས་ནས|་སོགས)/
   ];
 
   if (selection && selection.contents) {
-    var selectedParagraphs = selection.paragraphs;
+    // Snapshot paragraphs into a plain array so the loop is not disturbed
+    // by live re-evaluation of selection.paragraphs when we mutate the text.
+    var paragraphsToProcess = [];
+    for (var i = 0; i < selection.paragraphs.length; i++) {
+      paragraphsToProcess.push(selection.paragraphs.item(i));
+    }
 
-    for (var paragraphIndex = selectedParagraphs.length - 1; paragraphIndex >= 0; --paragraphIndex) {
-      var paragraph = selectedParagraphs.item(paragraphIndex);
-      processParagraph(paragraph, isPhonetics);
+    for (var paragraphIndex = paragraphsToProcess.length - 1; paragraphIndex >= 0; --paragraphIndex) {
+      processParagraph(paragraphsToProcess[paragraphIndex], isPhonetics);
     }
   }
 
   function processParagraph(paragraph, isPhonetics) {
-    var followingParagraph = paragraph.insertionPoints.item(-1).paragraphs[0];
-    if (paragraph.appliedParagraphStyle === tibetanStyle && (!followingParagraph.isValid || followingParagraph.appliedParagraphStyle !== mantraStyle)) {
-      var textForIAST = buildTextForIAST(paragraph);
-      var transliteration = generateIASTFor(textForIAST, isPhonetics).replace(/[\r\n]/g, '');
-      if (transliteration.replace(/\s/g, '').length === 0) {
-        return;
-      }
-      var insertionPoint = paragraph.insertionPoints.item(-1);
-      insertionPoint.contents = "\r";
+    if (paragraph.appliedParagraphStyle !== tibetanStyle) return;
 
-      var transliterationParagraph = insertionPoint.paragraphs[0];
-      transliterationParagraph.contents = transliteration + "\r";
-      transliterationParagraph.textStyleRanges[0].appliedCharacterStyle = findStyleByPath('[None]', 'character');
-      transliterationParagraph.appliedParagraphStyle = mantraStyle;
+    var followingParagraph = paragraph.insertionPoints.item(-1).paragraphs[0];
+    var followingIsMantra = followingParagraph.isValid && followingParagraph.appliedParagraphStyle === mantraStyle;
+    var followingIsPhonetics = followingParagraph.isValid && phoneticsStyle && followingParagraph.appliedParagraphStyle === phoneticsStyle;
+    var hasExistingRelatedParagraph = followingIsMantra || followingIsPhonetics;
+
+    if (hasExistingRelatedParagraph && !forceRegenerate) return;
+
+    var textForIAST = buildTextForIAST(paragraph);
+    var transliteration = generateIASTFor(textForIAST, isPhonetics).replace(/[\r\n]/g, '');
+    if (transliteration.replace(/\s/g, '').length === 0) return;
+
+    var noneCharStyle = findStyleByPath('[None]', 'character');
+
+    if (hasExistingRelatedParagraph) {
+      // Delete the existing mantra/phonetics paragraph entirely, then fall through
+      // to the standard insertion path — this avoids style bleed into the next paragraph.
+      followingParagraph.remove();
     }
+
+    var insertionPoint = paragraph.insertionPoints.item(-1);
+    insertionPoint.contents = "\r";
+
+    var transliterationParagraph = insertionPoint.paragraphs[0];
+    transliterationParagraph.contents = transliteration + "\r";
+    transliterationParagraph.characters.everyItem().appliedCharacterStyle = noneCharStyle;
+    transliterationParagraph.appliedParagraphStyle = mantraStyle;
   }
 
   function buildTextForIAST(paragraph) {
@@ -59,6 +88,8 @@ function insertMantra(isPhonetics) {
     if (!smallLettersCharacterStyle) {
       return fullContents;
     }
+
+    var paragraphLength = fullContents.length;
 
     // Find the character ranges protected by the exception patterns
     // (relative to the paragraph start), so small-letters inside them are kept.
@@ -84,8 +115,15 @@ function insertMantra(isPhonetics) {
     var result = '';
     var runningOffset = 0;
     for (var rangeIndex = 0; rangeIndex < paragraph.textStyleRanges.length; rangeIndex++) {
+      if (runningOffset >= paragraphLength) break;
       var textStyleRange = paragraph.textStyleRanges.item(rangeIndex);
       var contents = textStyleRange.contents;
+      // Clip to the current paragraph — textStyleRanges can extend past the
+      // paragraph boundary when the same character style is used on both sides.
+      var remaining = paragraphLength - runningOffset;
+      if (contents.length > remaining) {
+        contents = contents.substring(0, remaining);
+      }
       var isSmallLetters = textStyleRange.appliedCharacterStyle === smallLettersCharacterStyle;
       if (isSmallLetters && !isProtected(runningOffset)) {
         // Drop the small-letters segment, keep a space so words don't merge.
