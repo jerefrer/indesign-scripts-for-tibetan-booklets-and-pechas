@@ -52,6 +52,71 @@ var TibkritTransliterator = function (tibetan) {
 var replacementMap = [
   { tibetan: "བིཏྱ", transliteration: "vidya" }, // To check
   { tibetan: "བིདྱ", transliteration: "vidya" }, // To check
+  {
+    tibetan: "མ་རཀྨོ་ཡཀྨོ་ཀཱ་ལ་རཱུ་པ",
+    transliteration: "ma rakmo yakmo kāla rūpa",
+  },
+  {
+    tibetan: "མ་རཀྨོ་ཡཀྨོ་",
+    transliteration: "ma rakmo yakmo",
+  },
+  {
+    tibetan: "སྙིང་རྩ་ལ་ཡཾ་ཡཾ༔",
+    transliteration: "nying tsa la yaṁ yaṁ",
+  },
+  {
+    tibetan: "སྲོག་རྩ་ལ་ཡཾ་ཡཾ༔",
+    transliteration: "sok tsa la yaṁ yaṁ",
+  },
+  {
+    tibetan: "སྙིང་ལ་ཕྲིལ་ཕྲིལ༔",
+    transliteration: "nying tsa la tril tril",
+  },
+  {
+    tibetan: "སྲོག་ལ་ཆུཾ་ཆུཾ༔",
+    transliteration: "sok la chuṁ chuṁ",
+  },
+  {
+    tibetan: "ཙིཏྟ་སྲོག་ལ་ཏུང་ཏུང༔",
+    transliteration: "citta sok la tung tung",
+  },
+  {
+    tibetan: "སྙིང་ཁྲག་སྲོག་ལ་ཤད་ཤད༔",
+    transliteration: "nying trak sok la shé shé",
+  },
+  {
+    tibetan: "ཐུཾ་རི་ལི་ལི༔",
+    transliteration: "thuṁ ri li li",
+  },
+  {
+    tibetan: "ཙེག་ཙེག༔",
+    transliteration: "tsek tsek",
+  },
+  {
+    tibetan: "འུར་འུར༔",
+    transliteration: "ur ur",
+  },
+  {
+    tibetan: "ཤིག་ཤིག༔",
+    transliteration: "shik shik",
+  },
+  {
+    tibetan: "འགུལ་འགུལ༔",
+    transliteration: "gül gül",
+  },
+  {
+    tibetan: "མྱག་མྱག༔",
+    transliteration: "nyak yak",
+  },
+  {
+    tibetan: "སོད་སོད༔",
+    transliteration: "sö sö",
+  },
+  {
+    tibetan: "དྷ་ཏི་མ་མ་ཤྲཱི་གྷྲཾ་ཀརྨ་ཀ་ར་ཡེ་མ་ར་སེ་ན་པྲ་མརྡྷ་ན་ཡེ་ཧཱུྃ་ཕཊ྄༔",
+    transliteration:
+      "dha ti mama śrī ghṛaṁ karma karayé mara séna pramardanayé hūṁ phaṭ",
+  },
   { tibetan: "བ་ལིཾ་ཏ", transliteration: "baliṁta", phonetics: "balingta" },
   { tibetan: "བིནྡྷ", transliteration: "binda" },
   { tibetan: "བྷིནྡྷ", transliteration: "bhinda" },
@@ -177,6 +242,8 @@ var replacementMap = [
   { tibetan: "ཀཱ་མ་གུ་ཎ", transliteration: "kāma guṇa" },
   { tibetan: "གུ་ཎ", transliteration: "guṇa" },
   { tibetan: "ཧྲི་ད", transliteration: "hrida" },
+  { tibetan: "པྲ་མརྡྷ་ན་ཡེ", transliteration: "pramardhanayé" },
+  { tibetan: "པྲ་མརྡྷ་ན་", transliteration: "pramardhana" },
   { tibetan: "པྲ་མ་ཡ", transliteration: "pramaya" },
   { tibetan: "ཏ་ན་ག་ཎ", transliteration: "tana gaṇa" },
   { tibetan: "ནི་དྷི་པ་ཏི་", transliteration: "nidhi pati" },
@@ -836,6 +903,11 @@ var replacementMap = [
   { tibetan: "ཀྲོ་?དྡྷ", transliteration: "krodha" },
   { tibetan: "ཧྱ་གྷྲྀ་ཝ", transliteration: "hayaghṛva", phonetics: "hayagriva" },
   {
+    tibetan: "ཧྱ་གྲྀ་ཝ་",
+    transliteration: "hayaghṛva",
+    phonetics: "hayagriva",
+  },
+  {
     tibetan: "ཧྱ་གྲཱྀ་ཝ",
     transliteration: "hayagṛīva",
     phonetics: "hayagriva",
@@ -864,6 +936,14 @@ var replacementMap = [
   { tibetan: "ཀྵེ་ཏྲ", transliteration: "kṣétra" },
   { tibetan: "སྙིང༌ཁ", transliteration: "nyingkha" },
   { tibetan: "རཀྨ", transliteration: "rakma" },
+  { tibetan: "ཡཀྨ", transliteration: "yakma" },
+  { tibetan: "སྙིང་རྩ་", transliteration: "nying tsa" },
+  { tibetan: "སྙིང་ལ", transliteration: "nying la" },
+  { tibetan: "སྲོག་རྩ་", transliteration: "sok tsa" },
+  { tibetan: "སྲོག་ལ", transliteration: "sok la" },
+  { tibetan: "ཕྲིལ", transliteration: "tril" },
+  { tibetan: "ཏུང", transliteration: "tung" },
+  { tibetan: "ཤད", transliteration: "shé" },
   { tibetan: "སཱ་དྷུ་", transliteration: "sādhu" },
   { tibetan: "ར་ཏྲི", transliteration: "ratri" },
   { tibetan: "གིངྐ་ར", transliteration: "ginkara" },
