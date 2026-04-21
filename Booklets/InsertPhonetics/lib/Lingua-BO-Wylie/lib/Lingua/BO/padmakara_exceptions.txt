@@ -455,3 +455,6 @@ zhe 'dod	shendö	shendö
 zung du 'jug pa	zungdu jukpa	zungdu jukpa
 bdag	da	da
 phyag 'tshal	chatsal	chatsal
+rang byung	rangjung	rangjung
+ma gsal bar du	masal partu	masal partu
+ma grub bar du	matrub partu	matrub partu
