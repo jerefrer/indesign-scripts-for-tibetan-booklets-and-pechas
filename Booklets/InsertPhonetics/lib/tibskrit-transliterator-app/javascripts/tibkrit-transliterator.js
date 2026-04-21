@@ -5,7 +5,7 @@ var TibkritTransliterator = function (tibetan) {
     transliterate: function (options = {}) {
       var replaced = removeUntranscribedPunctuationAndNormalize(
         this.tibetan,
-        true
+        true,
       );
       _(replacementMap).each(function (word) {
         var replacement = options.phonetics
@@ -13,25 +13,25 @@ var TibkritTransliterator = function (tibetan) {
           : word.transliteration;
         replaced = replaced.replace(
           new RegExp("(" + word.tibetan + "[^་།༑༔]*)་ནཱཾ", "g"),
-          options.phonetics ? "$1་^^^nam" : "$1་^^^nāṁ"
+          options.phonetics ? "$1་^^^nam" : "$1་^^^nāṁ",
         );
         if (replacement.last() == "a") {
           replacement = replacement.slice(0, -1);
           replaced = replaced.replace(
             new RegExp("(" + word.tibetan + ")ཱ་ཡ་", "g"),
-            options.phonetics ? "$1aya " : "$1āya "
+            options.phonetics ? "$1aya " : "$1āya ",
           );
           replaced = replaced.replace(
             new RegExp("(" + word.tibetan + ")་ཡ་", "g"),
-            "$1aya "
+            "$1aya ",
           );
           replaced = replaced.replace(
             new RegExp(word.tibetan + "[་།༑༔]", "g"),
-            replacement + "a "
+            replacement + "a ",
           );
           replaced = replaced.replace(
             new RegExp(word.tibetan + "ཿ", "g"),
-            replacement + (options.phonetics ? "ah" : "aḥ")
+            replacement + (options.phonetics ? "ah" : "aḥ"),
           );
         }
         replaced = replaced.replace(new RegExp(word.tibetan, "g"), replacement);
@@ -41,7 +41,7 @@ var TibkritTransliterator = function (tibetan) {
         this.line = this.line.capitalize();
         this.line = this.line.replace(
           / {2,}(.)/g,
-          (letter) => "    " + letter.toUpperCase()
+          (letter) => "    " + letter.toUpperCase(),
         );
       } else this.line = this.line.replace(/ {2,}/g, "    ");
       return this.line.trim();
