@@ -135,6 +135,129 @@ var replacementMap = [
     transliteration:
       "dha ti mama śrī ghṛaṁ karma karayé mara séna pramardanayé hūṁ phaṭ",
   },
+
+  // Animal-face mantras (sūkara-mukha / iṣupa-mukhī pair and the rest).
+  {
+    tibetan: "སུ་ཀ་ར་མུ་ཁ",
+    transliteration: "sūkara-mukha",
+  },
+  {
+    tibetan: "ཨི་ཥུ་པ་མུ་ཁི",
+    transliteration: "iṣupa-mukhī",
+  },
+  {
+    tibetan: "བྱཱ་གྲྀ་མུ་ཁ",
+    transliteration: "vyāghra-mukha",
+  },
+  {
+    tibetan: "གྲྀ་དྷ་མུ་ཁི",
+    transliteration: "gṛdhra-mukhī",
+  },
+  {
+    tibetan: "ཙ་མ་ར་མུ་ཁ",
+    transliteration: "camara-mukha",
+  },
+  {
+    tibetan: "ཏ་ནཱ་མུ་ཁི",
+    transliteration: "tanā-mukhī",
+  },
+  {
+    tibetan: "ཧ་རི་ཎ་མུ་ཁ",
+    transliteration: "hariṇa-mukha",
+  },
+  {
+    tibetan: "ཨཱུ་ལུ་ཀ་མུ་ཁི",
+    transliteration: "ulūka-mukhī",
+  },
+  {
+    tibetan: "ཏྱ་ཀི་མུ་ཁ",
+    transliteration: "tyaki-mukha",
+  },
+  {
+    tibetan: "པྲེ་ཏ་མུ་ཁི",
+    transliteration: "preta-mukhī",
+  },
+  {
+    tibetan: "པི་ཊྭ་ལ་མུ་ཁ",
+    transliteration: "piṭvala-mukha",
+  },
+  {
+    tibetan: "པཀྵི་ཏ་མུ་ཁི",
+    transliteration: "pakṣi-mukhī",
+  },
+  {
+    tibetan: "སྲྀ་ག་ལ་མུ་ཁ",
+    transliteration: "sṛgāla-mukha",
+  },
+  {
+    tibetan: "པཉྩ་ར་ཎ་མུ་ཁི",
+    transliteration: "pañcaraṇa-mukhī",
+  },
+  {
+    tibetan: "སིཾ་ཧ་མུ་ཁ",
+    transliteration: "siṁha-mukha",
+  },
+  {
+    tibetan: "ཏི་ཏི་ལ་མུ་ཁི",
+    transliteration: "titila-mukhī",
+  },
+  {
+    tibetan: "རཀྵི་ས་མུ་ཁ",
+    transliteration: "rakṣisa-mukha",
+  },
+  {
+    tibetan: "ན་ཀུ་ལ་མུ་ཁི",
+    transliteration: "nakula-mukhī",
+  },
+  {
+    tibetan: "རཀྵ་ས་མུ་ཁ",
+    transliteration: "rakṣasa-mukha",
+  },
+  {
+    tibetan: "ཀ་ཤི་ཀ་མུ་ཁི",
+    transliteration: "kaśika-mukhī",
+  },
+
+  // Mātṛkā-bhyo offering mantras
+  { tibetan: "མ་ནུ་རཀྴ་སི་བྷྱོ", transliteration: "mānurakṣasi-bhyo" },
+  { tibetan: "པྲཧྨ་ནི་བྷྱོ", transliteration: "brahmāṇi-bhyo" },
+  { tibetan: "རཽ་ཏྲཱི་བྷྱོ", transliteration: "raudrī-bhyo" },
+  { tibetan: "བིཥྞ་བྷྱ་བྷྱོ", transliteration: "viṣṇabhya-bhyo" },
+  { tibetan: "ཀུ་མཱ་རི་བྷྱོ", transliteration: "kumāri-bhyo" },
+  { tibetan: "ཨིནྡྲ་ཎཱི་བྷྱོ", transliteration: "indrāṇī-bhyo" },
+  { tibetan: "སིང་ག་ལཾ་བྷྱོ", transliteration: "siṁgalaṁ-bhyo" },
+  { tibetan: "ཤིནྟཾ", transliteration: "śintaṁ" },
+
+  // Second Mātṛkā-bhyo series (amṛtaṁ, saumye, …)
+  { tibetan: "ཨ་མྲྀ་ཏཾ་བྷྱོ", transliteration: "amṛtaṁ-bhyo" },
+  { tibetan: "སཽ་མྱེ་བྷྱོ", transliteration: "saumye-bhyo" },
+  { tibetan: "དཎྚ་དཾ་བྷྱོ", transliteration: "daṇḍadaṁ-bhyo" },
+  { tibetan: "རཀྴ་སི་བྷྱོ", transliteration: "rakṣasi-bhyo" },
+  { tibetan: "བྷཀྵ་སི་བྷྱོ", transliteration: "bhakṣasi-bhyo" },
+  { tibetan: "ར་ཏི་བཛྲ་བྷྱོ", transliteration: "rati-vajra-bhyo" },
+  { tibetan: "རུ་ཏི་ར་མ་ཏི་བྷྱོ", transliteration: "rutiramati-bhyo" },
+
+  // Third Mātṛkā-bhyo series (ekacatiṇi, manuharaṁ, …)
+  { tibetan: "ཨེ་ཀ་ཙ་ཏི་ཎི་བྷྱོ", transliteration: "ekacatiṇi-bhyo" },
+  { tibetan: "མ་ནུ་ཧ་རཾ་བྷྱོ", transliteration: "manuharaṁ-bhyo" },
+  { tibetan: "སི་ཏི་ཀཾ་བྷྱོ", transliteration: "sitikaṁ-bhyo" },
+  { tibetan: "ཝཱ་ཡ་ཝེ་བྷྱོ", transliteration: "vāyave-bhyo" },
+  { tibetan: "མ་ཧཱ་མ་ར་ཎ་བྷྱོ", transliteration: "mahāmaraṇa-bhyo" },
+  { tibetan: "ཨགྣི་བཛྲ་བྷྱོ", transliteration: "agni-vajra-bhyo" },
+  { tibetan: "བྷ་ར་ཧི་བྷྱོ", transliteration: "bharahi-bhyo" },
+  { tibetan: "ཝཱ་ཤཾ", transliteration: "vāśaṁ" },
+
+  // Fourth Mātṛkā-bhyo series (cāmuṇṭi, sutani, …) — closing phrase is
+  // the māraya-phaṭ subjugation formula.
+  { tibetan: "ཙ་མུནྟི་བྷྱོ", transliteration: "cāmuṇṭi-bhyo" },
+  { tibetan: "སུ་ཏ་ནི་བྷྱོ", transliteration: "sutani-bhyo" },
+  { tibetan: "ཝ་རུ་ཎ་བྷྱོ", transliteration: "varuṇa-bhyo" },
+  { tibetan: "མ་ཧཱ་ཀཱ་ལི་བྷྱོ", transliteration: "mahākāli-bhyo" },
+  { tibetan: "ཙ་ཀ་ལ་བྷྱོ", transliteration: "cakala-bhyo" },
+  { tibetan: "ཀུཾ་བྷ་ཀརྞ་བྷྱོ", transliteration: "kumbhakarṇa-bhyo" },
+  { tibetan: "ལམྦྷོ་དྷཱ་ར་བྷྱོ", transliteration: "lambhodhāra-bhyo" },
+  { tibetan: "མཱ་ར་ཡ་ཕཊ྄", transliteration: "māraya phaṭ" },
+
   { tibetan: "བ་ལིཾ་ཏ", transliteration: "baliṁta", phonetics: "balingta" },
   { tibetan: "བིནྡྷ", transliteration: "binda" },
   { tibetan: "བྷིནྡྷ", transliteration: "bhinda" },
@@ -155,6 +278,14 @@ var replacementMap = [
   { tibetan: "ཨཱ་ཙ་ལ", transliteration: "ācala" },
   { tibetan: "སཾ་སྐཱ་ར", transliteration: "saṁskāra" },
   { tibetan: "ས་མུཏྒ་ཏེ", transliteration: "samutgate" },
+  { tibetan: "མོ་ཧ", transliteration: "moha" },
+  { tibetan: "ཀཱ་ར་ཡེ་", transliteration: "kārayé" },
+  { tibetan: "གྷཱ་ཏ་ཡ་", transliteration: "ghātaya" },
+  {
+    tibetan: "ཤྲཱི་གྷྲྃ་",
+    transliteration: "śrīghṛaṁ",
+    phonetics: "shrighram",
+  },
   {
     tibetan: "ཧ་ཧོ་ཧྲཱིཿ",
     transliteration: "ha ho hrīḥ",
@@ -171,31 +302,27 @@ var replacementMap = [
     phonetics: "ayur gyana",
   },
   {
-    tibetan: "ཨརྒྷཾ་སོགས་ནས། ཤབྡ་",
+    tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?སོགས་ནས། ཤ(པྟ|བྡ)",
     transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
-    tibetan: "ཨརྒྷཾ་སོགས། ཤབྡ་",
+    tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?སོགས། ཤ(པྟ|བྡ)",
     transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
-    tibetan: "ཨརྒྷཾ་ནས[་། ]+ཤབྡ",
+    tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?ནས[་། ]+ཤ(པྟ|བྡ)",
     transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
-    tibetan: "ཨརྒྷཾ་ནས[་། ]+ཤཔྟ",
+    tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?སོགས་ཀྱིས་མཆོད།",
     transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
-    tibetan: "ཨརྒྷཾ་སོགས་ཀྱིས་མཆོད།",
+    tibetan: "ཨརྒྷཾ་(པཱ་དྱཾ་)?སོགས།",
     transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   {
-    tibetan: "ཨརྒྷཾ་སོགས།",
-    transliteration: "arghaṁ pādyaṃ puṣpe dhūpe āloke gandhe naivedye śabda",
-  },
-  {
-    tibetan: "པུཥྤེ་ནས། ཤབྡ་",
+    tibetan: "པུཥྤེ་ནས། ཤ(པྟ|བྡ)",
     transliteration: "puṣpe dhūpe āloke gandhe naivedye śabda",
   },
   { tibetan: "བིགྷྣན་", transliteration: "bighnan", phonetics: "bighanen" },
@@ -1095,6 +1222,7 @@ var replacementMap = [
   { tibetan: "ཁྲ", transliteration: "khra" },
   { tibetan: "ཏྲ", transliteration: "tra" },
   { tibetan: "དྲ", transliteration: "dra" },
+  { tibetan: "ཛྷ་", transliteration: "jha" },
   { tibetan: "ཤྲ", transliteration: "śr", phonetics: "shra" },
 
   { tibetan: "ཥྚ", transliteration: "ṣṭa", phonetics: "shta" },
