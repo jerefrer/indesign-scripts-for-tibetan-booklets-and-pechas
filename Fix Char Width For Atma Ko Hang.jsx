@@ -11,7 +11,7 @@ app.doScript(
   function () {
     var document = app.activeDocument;
 
-    var targetStrings = ["ཨཏྨ་ཀོ྅ཧཾ", "ཨཏྨ་ཀོ྅་ཧཾ"];
+    var targetStrings = ["ཨཏྨ་ཀོ྅ཧཾ", "ཨཏྨ་ཀོ྅་ཧཾ", "ཤུདྡྷོ྅ཧཾ", "ཤུདྡྷོ྅་ཧཾ"];
     var avagraha = "྅";
     var SPACE_HORIZONTAL_SCALE = 34;
 
