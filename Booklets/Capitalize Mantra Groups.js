@@ -44,20 +44,20 @@ if (doRun) {
         var paragraph = story.paragraphs.item(paragraphIndex);
         if (paragraph.appliedParagraphStyle === targetStyle) {
           // Step 1: normalize every run of spaces + explicit group markers
-          // (, | !) to exactly 4 spaces — these punctuation marks are
+          // (, | ! ;) to exactly 4 spaces — these punctuation marks are
           // consumed because they only exist to signal a group boundary.
           var contents = paragraph.contents;
           var separatorRuns = [];
           var c = 0;
           while (c < contents.length) {
             var cc = contents.charAt(c);
-            if (cc === ' ' || cc === ',' || cc === '|' || cc === '!') {
+            if (cc === ' ' || cc === ',' || cc === '|' || cc === '!' || cc === ';') {
               var runStart = c;
               var runHasSeparator = false;
               while (c < contents.length) {
                 var cc2 = contents.charAt(c);
                 if (cc2 === ' ') { c++; }
-                else if (cc2 === ',' || cc2 === '|' || cc2 === '!') { runHasSeparator = true; c++; }
+                else if (cc2 === ',' || cc2 === '|' || cc2 === '!' || cc2 === ';') { runHasSeparator = true; c++; }
                 else { break; }
               }
               if (runHasSeparator) {
