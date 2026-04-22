@@ -91,10 +91,17 @@ function runInsertMantra(isPhonetics) {
     transliterationParagraph.appliedParagraphStyle = mantraStyle;
   }
 
+  // Forced line break inside a paragraph (Shift+Enter, U+2028, sometimes \n)
+  // should act as a group boundary. Replace with 4 spaces so the transliterator's
+  // multi-space capitalization kicks in. Paragraph terminators (\r) stay alone.
+  function replaceForcedLineBreaks(text) {
+    return text.replace(/[\u2028\n]/g, '    ');
+  }
+
   function buildTextForIAST(paragraph) {
     var fullContents = paragraph.contents;
     if (!smallLettersCharacterStyle) {
-      return fullContents;
+      return replaceForcedLineBreaks(fullContents);
     }
 
     var paragraphLength = fullContents.length;
@@ -154,7 +161,7 @@ function runInsertMantra(isPhonetics) {
       }
       runningOffset += contents.length;
     }
-    return result;
+    return replaceForcedLineBreaks(result);
   }
 }
 
