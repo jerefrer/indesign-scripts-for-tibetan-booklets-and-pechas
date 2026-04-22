@@ -7,9 +7,17 @@ var document = app.activeDocument;
 var selection = app.selection[0];
 
 function insertMantra(isPhonetics) {
+  // Wrap everything in a single doScript with ENTIRE_SCRIPT undo mode so all
+  // paragraph insertions/deletions collapse into one Ctrl-Z step.
+  app.doScript(function () {
+    runInsertMantra(isPhonetics);
+  }, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, "Insert Mantra IAST");
+}
+
+function runInsertMantra(isPhonetics) {
   var scriptLabel = document.extractLabel("selectedStyles");
   var selectedStyles = scriptLabel ? JSON.parse(scriptLabel) : {};
-  
+
   var tibetanStyle = findStyleByPath(selectedStyles.tibetan, 'paragraph');
   var mantraStyle = selectedStyles.mantra ? findStyleByPath(selectedStyles.mantra, 'paragraph') : null;
   var phoneticsStyle = selectedStyles.phonetics ? findStyleByPath(selectedStyles.phonetics, 'paragraph') : null;

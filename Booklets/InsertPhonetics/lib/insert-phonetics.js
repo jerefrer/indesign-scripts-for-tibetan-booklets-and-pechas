@@ -88,13 +88,21 @@ function openSettings() {
 }
 
 function insertPhonetics(selectedStyles) {
+  // Wrap everything in a single doScript with ENTIRE_SCRIPT undo mode so all
+  // paragraph insertions collapse into one Ctrl-Z step.
+  app.doScript(function () {
+    runInsertPhonetics(selectedStyles);
+  }, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, "Insert Phonetics");
+}
+
+function runInsertPhonetics(selectedStyles) {
   var selection = app.selection[0];
 
   if (!isPerlAvailable()) {
     alert('Perl is not available.\n\nInstall perl with "brew install perl" and try again.');
     return;
   }
-  
+
   var tibetanStyle = findStyleByPath(selectedStyles.tibetan, 'paragraph');
   var phoneticsStyle = findStyleByPath(selectedStyles.phonetics, 'paragraph');
   var mantraStyle = selectedStyles.mantra ? findStyleByPath(selectedStyles.mantra, 'paragraph') : null;
