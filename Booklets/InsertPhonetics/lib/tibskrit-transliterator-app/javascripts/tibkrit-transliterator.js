@@ -91,20 +91,40 @@ var replacementMap = [
     transliteration: "nying tsa la tril tril",
   },
   {
+    tibetan: "ཁྲིལ་ཁྲིལ",
+    transliteration: "tril tril",
+  },
+  {
     tibetan: "སྲོག་ལ་ཆུཾ་ཆུཾ",
-    transliteration: "sok la chuṁ chuṁ",
+    transliteration: "sok la chum chum",
+  },
+  {
+    tibetan: "ཆུམ་ཆུམ",
+    transliteration: "chum chum",
   },
   {
     tibetan: "ཙིཏྟ་སྲོག་ལ་ཏུང་ཏུང",
     transliteration: "citta sok la tung tung",
   },
   {
+    tibetan: "ཏུང་ཏུང",
+    transliteration: "tung tung",
+  },
+  {
     tibetan: "སྙིང་ཁྲག་སྲོག་ལ་ཤད་ཤད",
     transliteration: "nying trak sok la shé shé",
   },
   {
-    tibetan: "ཐུཾ་རི་ལི་ལི",
-    transliteration: "thuṁ ri li li",
+    tibetan: "སྙིང་ཁྲག",
+    transliteration: "nying trak",
+  },
+  {
+    tibetan: "ཤད་ཤད",
+    transliteration: "shé shé",
+  },
+  {
+    tibetan: "(ཐུཾ|ཐུམ)་རི་ལི་ལི",
+    transliteration: "thum ri li li",
   },
   {
     tibetan: "ཙེག་ཙེག",
@@ -131,9 +151,45 @@ var replacementMap = [
     transliteration: "sö sö",
   },
   {
+    tibetan: "བདུད་པྲ",
+    transliteration: "dütra",
+  },
+  {
+    tibetan: "ཚལ་པ་ཚལ་པ",
+    transliteration: "tsalpa tsalpa",
+  },
+  {
+    tibetan: "ཁྲོམ་ཁྲོམ",
+    transliteration: "trom trom",
+  },
+  {
+    tibetan: "ཏིར་ཏིར་",
+    transliteration: "tir tir",
+  },
+  {
+    tibetan: "ཚལ་ཚལ་",
+    transliteration: "tsal tsal",
+  },
+  {
+    tibetan: "ཤག་རྦད",
+    transliteration: "shak bé",
+  },
+  {
+    tibetan: "དུམ་དུམ་",
+    transliteration: "tum tum",
+  },
+  {
     tibetan: "དྷ་ཏི་མ་མ་ཤྲཱི་གྷྲཾ་ཀརྨ་ཀ་ར་ཡེ་མ་ར་སེ་ན་པྲ་མརྡྷ་ན་ཡེ་ཧཱུྃ་ཕཊ྄",
     transliteration:
-      "dha ti mama śrī ghṛaṁ karma karayé mara séna pramardanayé hūṁ phaṭ",
+      "dha ti mama śrī ghṛaṁ karma karayé māra séna pramardanayé hūṁ phaṭ",
+  },
+  {
+    tibetan: "ཀ་ར་ཡེ",
+    transliteration: "karayé",
+  },
+  {
+    tibetan: "མཱ་ར་སེ་ན",
+    transliteration: "māra séna",
   },
 
   // Animal-face mantras (sūkara-mukha / iṣupa-mukhī pair and the rest).
@@ -234,6 +290,7 @@ var replacementMap = [
   { tibetan: "དཎྚ་དཾ་བྷྱོ", transliteration: "daṇḍadaṁ-bhyo" },
   { tibetan: "རཀྴ་སི་བྷྱོ", transliteration: "rakṣasi-bhyo" },
   { tibetan: "བྷཀྵ་སི་བྷྱོ", transliteration: "bhakṣasi-bhyo" },
+  { tibetan: "བྷཀྵ་སི་", transliteration: "bhakṣasi" },
   { tibetan: "ར་ཏི་བཛྲ་བྷྱོ", transliteration: "rati-vajra-bhyo" },
   { tibetan: "རུ་ཏི་ར་མ་ཏི་བྷྱོ", transliteration: "rutiramati-bhyo" },
 
@@ -281,6 +338,8 @@ var replacementMap = [
   { tibetan: "མོ་ཧ", transliteration: "moha" },
   { tibetan: "ཀཱ་ར་ཡེ་", transliteration: "kārayé" },
   { tibetan: "གྷཱ་ཏ་ཡ་", transliteration: "ghātaya" },
+  { tibetan: "ཀཱ་ཝཱ་ཙི་", transliteration: "kāvāci" },
+  { tibetan: "རུ་ཏྲ", transliteration: "rutra" },
   {
     tibetan: "ཤྲཱི་གྷྲྃ་",
     transliteration: "śrīghṛaṁ",
@@ -1123,6 +1182,7 @@ var replacementMap = [
   { tibetan: "ཤད", transliteration: "shé" },
   { tibetan: "སཱ་དྷུ་", transliteration: "sādhu" },
   { tibetan: "ར་ཏྲི", transliteration: "ratri" },
+  { tibetan: "མཾ་ས", transliteration: "maṁsa" },
   { tibetan: "གིངྐ་ར", transliteration: "ginkara" },
   { tibetan: "ཡཀྴ་", transliteration: "yakśa", phonetics: "yaksha" },
   { tibetan: "སུ་པྲ", transliteration: "supra" },
