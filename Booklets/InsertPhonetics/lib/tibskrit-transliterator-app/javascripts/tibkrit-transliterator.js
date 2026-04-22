@@ -884,6 +884,8 @@ var replacementMap = [
   { tibetan: "ཏྲཻ་ལོ་?ཀྱ", transliteration: "trailokya" },
   { tibetan: "ཨངྐུ་ཤ", transliteration: "angkuśa" },
   { tibetan: "ཨངྐུ", transliteration: "angku" },
+  { tibetan: "སྤྲོད་མཐར", transliteration: "trö thar" },
+  { tibetan: "དམ་སྲི་", transliteration: "damsi" },
   {
     tibetan: "ཨ་མོ་གྷ་པཱ་ཤ",
     transliteration: "amoghapāśa",
@@ -1216,6 +1218,7 @@ var replacementMap = [
   { tibetan: "ཨ་དྷི་པ་ཏི", transliteration: "adhipati" },
   { tibetan: "ཁངྒ་", transliteration: "khanga" },
   { tibetan: "གཽ་རོ", transliteration: "gauro" },
+  { tibetan: "ན་ག", transliteration: "naga" },
   { tibetan: "ཀན", transliteration: "kan" },
 
   { tibetan: "ཨཱ་?ཡུར", transliteration: "ayur" },
