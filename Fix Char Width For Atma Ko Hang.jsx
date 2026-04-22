@@ -1,8 +1,8 @@
 // For every paragraph in the active document that contains either
 //   ཨཏྨ་ཀོ྅ཧཾ   or   ཨཏྨ་ཀོ྅་ཧཾ
-// ensure that the avagraha ྅ is followed by a 40%-wide space and a tsheg.
+// ensure that the avagraha ྅ is followed by a 34%-wide space and a tsheg.
 // If the tsheg is missing, insert " ་" after ྅ and set the inserted space's
-// horizontalScale to 40%.
+// horizontalScale to 34%.
 //
 // The whole operation is wrapped in app.doScript so that every change made
 // by the script can be undone in a single Ctrl-Z.
@@ -52,6 +52,14 @@ app.doScript(
         for (var p = avagraphaPositions.length - 1; p >= 0; p--) {
           var avPos = avagraphaPositions[p];
           var afterAvPos = avPos + avagraha.length;
+
+          // Skip if the character right after ྅ already has an adjusted
+          // horizontalScale — that means a width-fix character is already in
+          // place (from a previous run or a manual edit) and must not be
+          // duplicated.
+          var followingChar = paragraph.characters.item(afterAvPos);
+          if (followingChar.isValid && followingChar.horizontalScale !== 100)
+            continue;
 
           // Skip if a tsheg already follows (with or without leading space).
           var scanPos = afterAvPos;
