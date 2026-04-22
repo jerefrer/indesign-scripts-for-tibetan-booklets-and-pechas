@@ -99,13 +99,22 @@ function runInsertMantra(isPhonetics) {
 
     var paragraphLength = fullContents.length;
 
+    // Apply the length-preserving part of removeUntranscribedPunctuationAndNormalize
+    // so the exception patterns below match the same normalized form that the
+    // transliterator uses internally. Only 1-to-1 substitutions are done here —
+    // steps that change length (trim, ༔/ཿ tsheg injection, trailing tsheg removal)
+    // are skipped so offsets still map back to the original paragraph characters.
+    var normalizedForMatching = fullContents
+      .replace(/[༵\u0F04-\u0F0A\u0F0D-\u0F1F\u0F3A-\u0F3F\u0FBE-\uF269]/g, '་')
+      .replace(/[ྃྂ]/g, 'ཾ');
+
     // Find the character ranges protected by the exception patterns
     // (relative to the paragraph start), so small-letters inside them are kept.
     var protectedRanges = [];
     for (var p = 0; p < smallLettersExceptionPatterns.length; p++) {
       var regex = new RegExp(smallLettersExceptionPatterns[p].source, 'g');
       var match;
-      while ((match = regex.exec(fullContents)) !== null) {
+      while ((match = regex.exec(normalizedForMatching)) !== null) {
         protectedRanges.push({ start: match.index, end: match.index + match[0].length });
         if (match[0].length === 0) regex.lastIndex++;
       }

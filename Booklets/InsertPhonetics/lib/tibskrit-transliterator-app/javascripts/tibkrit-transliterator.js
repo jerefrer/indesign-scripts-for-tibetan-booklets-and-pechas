@@ -155,6 +155,14 @@ var replacementMap = [
     transliteration: "dütra",
   },
   {
+    tibetan: "བདུད",
+    transliteration: "dü",
+  },
+  {
+    tibetan: "ཏྲི་ནཱ་ཐ་",
+    transliteration: "trinātha",
+  },
+  {
     tibetan: "ཚལ་པ་ཚལ་པ",
     transliteration: "tsalpa tsalpa",
   },
@@ -182,6 +190,10 @@ var replacementMap = [
     tibetan: "དྷ་ཏི་མ་མ་ཤྲཱི་གྷྲཾ་ཀརྨ་ཀ་ར་ཡེ་མ་ར་སེ་ན་པྲ་མརྡྷ་ན་ཡེ་ཧཱུྃ་ཕཊ྄",
     transliteration:
       "dha ti mama śrī ghṛaṁ karma karayé māra séna pramardanayé hūṁ phaṭ",
+  },
+  {
+    tibetan: "ཤཱི་གྷྲཾ་",
+    transliteration: "śīghṛaṁ",
   },
   {
     tibetan: "ཀ་ར་ཡེ",
@@ -321,6 +333,7 @@ var replacementMap = [
   { tibetan: "ཨ་པ་རཱ་ཛི་ཏ་", transliteration: "aparājita" },
   { tibetan: "ཨ་ཙ་ལ་", transliteration: "acala", phonetics: "achala" },
   { tibetan: "ནི་ལ་དཎྜ", transliteration: "niladaṇḍa" },
+  { tibetan: "ནཱི་ལ་དཎྜ", transliteration: "nīladaṇḍa" },
   { tibetan: "དཎྜ", transliteration: "daṇḍa" },
   { tibetan: "སྥོ་ཊ", transliteration: "sphoṭa" },
   { tibetan: "དྷྲིཥྚ", transliteration: "dhriṣṭa" },
@@ -600,7 +613,7 @@ var replacementMap = [
   { tibetan: "ཀ་རི", transliteration: "kari" },
   { tibetan: "ཀུ་མ་རཱུ", transliteration: "kumarū" },
   { tibetan: "ག་རུ་ཌ", transliteration: "garuḍa" },
-  { tibetan: "ཀུཎྜ་ལ་", transliteration: "kuṇḍala" },
+  { tibetan: "ཀུཎྜ་?ལ་", transliteration: "kuṇḍala" },
   { tibetan: "ཀུཎྜ", transliteration: "kuṇḍa" },
   {
     tibetan: "ཨམྲྀ་ཏོདྦྷ་བ",
@@ -868,7 +881,7 @@ var replacementMap = [
   { tibetan: "སམྦྷ", transliteration: "sambha" },
   { tibetan: "ཨ་གྲ", transliteration: "agra" },
   { tibetan: "ཨ་པྲ་ཏི", transliteration: "aprati" },
-  { tibetan: "ཏྲཻ་ལོ་ཀྱ", transliteration: "trailokya" },
+  { tibetan: "ཏྲཻ་ལོ་?ཀྱ", transliteration: "trailokya" },
   { tibetan: "ཨངྐུ་ཤ", transliteration: "angkuśa" },
   { tibetan: "ཨངྐུ", transliteration: "angku" },
   {
@@ -1075,6 +1088,7 @@ var replacementMap = [
   { tibetan: "མེ་གྷ", transliteration: "mégha" },
   { tibetan: "སེང་ཧ", transliteration: "sengha" },
   { tibetan: "སེང", transliteration: "seng" },
+  { tibetan: "སིངྷ", transliteration: "siṃha" },
   { tibetan: "མུ་ཁ", transliteration: "mukha" },
   { tibetan: "དུ་ཁེ", transliteration: "dukhé" },
   { tibetan: "ཙཎྜ", transliteration: "caṇḍa", phonetics: "chandra" },
@@ -1101,6 +1115,7 @@ var replacementMap = [
   { tibetan: "ཤབྡ", transliteration: "śapda", phonetics: "shapda" },
   { tibetan: "རཱུ་པ", transliteration: "rūpa" },
   { tibetan: "རཱ་ས", transliteration: "rāsa" },
+  { tibetan: "ནཱན", transliteration: "nān" },
   { tibetan: "ནན", transliteration: "nen" },
   { tibetan: "སྤརྴེ", transliteration: "sparśé", phonetics: "sparshé" },
   {
@@ -1132,11 +1147,14 @@ var replacementMap = [
   { tibetan: "ཤྨ་ཤཱ་ན", transliteration: "śmaśāna", phonetics: "shmashana" },
   { tibetan: "ཨུཙྪིཥྚ་", transliteration: "ucchiṣta", phonetics: "uchishta" },
   { tibetan: "བ་ལིངྟ་", transliteration: "baliṁta", phonetics: "balingta" },
-  { tibetan: "ཧཱུྃ་ཀཱ་ར་", transliteration: "hūṁkāra", phonetics: "hungkara" },
+  { tibetan: "ཧཱུྃ་ཀཱ་ར", transliteration: "hūṁkāra", phonetics: "hungkara" },
+  { tibetan: "ཧཱུྃ་ཀ་ར", transliteration: "hūṁkara", phonetics: "hungkara" },
+  { tibetan: "བི་ཀྲྀ་ཏ", transliteration: "vikṛta", phonetics: "vikrita" },
   { tibetan: "ཤ་ཏྲུཾ", transliteration: "śatruṁ", phonetics: "shatrum" },
   { tibetan: "ཀྲོ་?(དྷ|དྡྷ)་ན", transliteration: "krodhana" },
   { tibetan: "ཀྲོ་?(དྷ|དྡྷ)", transliteration: "krodha" },
   { tibetan: "དྷ་ན", transliteration: "dhana" },
+  { tibetan: "མ་ཧཱ་སུ་ཁ་", transliteration: "mahāsukha" },
   { tibetan: "ཧྱ་གྷྲྀ་ཝ", transliteration: "hayaghṛva", phonetics: "hayagriva" },
   {
     tibetan: "ཧྱ་གྲྀ་ཝ་",
