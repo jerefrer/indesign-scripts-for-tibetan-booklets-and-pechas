@@ -1,5 +1,5 @@
-#include "../../lib/json2.js"
-#include "../../lib/styles-utils.js"
+#include "../../../lib/json2.js"
+#include "../../../lib/styles-utils.js"
 
 var document = app.activeDocument;
 var scriptDirectory = File($.fileName).parent.fsName;
