@@ -54,42 +54,62 @@ function createUI() {
 
 function pasteBeforeStyledParagraphs(doc, targetStyle, linesToPaste, insertionPosition, insertionStyle) {
     var selection = doc.selection[0];
-    
-    if (selection && selection.hasOwnProperty('paragraphs')) {
-        var paragraphs = selection.paragraphs;
-        var eligibleParagraphsCount = 0;
-        
-        for (var i = 0; i < paragraphs.length; i++) {
-            if (paragraphs[i].appliedParagraphStyle === targetStyle && paragraphs[i].contents.replace(/[ \n\r]/g, '').length) {
-                eligibleParagraphsCount++;
-            }
+
+    if (!selection || !selection.hasOwnProperty('paragraphs')) {
+        alert("Please select all the lines where you want the text inserted.");
+        return;
+    }
+
+    var paragraphs = selection.paragraphs;
+    var eligibleParagraphsCount = 0;
+
+    for (var i = 0; i < paragraphs.length; i++) {
+        if (paragraphs[i].appliedParagraphStyle === targetStyle && paragraphs[i].contents.replace(/[ \n\r]/g, '').length) {
+            eligibleParagraphsCount++;
         }
-        
-        if (eligibleParagraphsCount !== linesToPaste.length) {
-            alert("The number of lines to paste does not match the number of target paragraphs. Expected " + eligibleParagraphsCount + " lines, but got " + linesToPaste.length + ".");
-            return;
-        }
-        
+    }
+
+    if (eligibleParagraphsCount !== linesToPaste.length) {
+        alert("The number of lines to paste does not match the number of target paragraphs. Expected " + eligibleParagraphsCount + " lines, but got " + linesToPaste.length + ".");
+        return;
+    }
+
+    // Wrap the whole mutation in ENTIRE_SCRIPT undo mode so a single Ctrl-Z
+    // reverts every inserted paragraph at once.
+    app.doScript(function () {
+        var noneCharStyle = findStyleByPath('[None]', 'character');
         var lineIndex = linesToPaste.length - 1;
         for (var j = selection.paragraphs.length; j >= 0; --j) {
             var paragraph = selection.paragraphs[j];
             if (paragraph.isValid && paragraph.appliedParagraphStyle === targetStyle && paragraph.contents.replace(/[ \n\r]/g, '').length) {
                 var insertionPoint;
                 if (insertionPosition === "Before") {
-                    insertionPoint = paragraph.insertionPoints[0]; 
+                    insertionPoint = paragraph.insertionPoints[0];
                 } else {
                     insertionPoint = paragraph.insertionPoints[-1];
                 }
                 insertionPoint.contents = linesToPaste[lineIndex] + "\r";
                 var insertedText = (insertionPosition === "Before") ? insertionPoint.paragraphs[0] : insertionPoint.paragraphs[-1];
                 insertedText.appliedParagraphStyle = insertionStyle;
+                // Reset character styling per-character so the opening character
+                // style of the adjacent paragraph cannot bleed into the newly
+                // inserted line (happens mostly in the "After" case when the
+                // insertion point sits at the start of the following paragraph).
+                insertedText.characters.everyItem().appliedCharacterStyle = noneCharStyle;
+                // clearOverrides wipes direct character formatting (pointSize,
+                // font, horizontalScale, …) that the insertion point inherited
+                // from the next paragraph's opening character — setting the
+                // character style to [None] alone does not remove those.
+                try {
+                    insertedText.clearOverrides();
+                } catch (e) {
+                    // clearOverrides is available on Text-derived objects; ignore
+                    // if the specific InDesign version disagrees.
+                }
                 lineIndex--;
             }
         }
-        
-    } else {
-        alert("Please select all the lines where you want the text inserted.");
-    }
+    }, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, "Insert Lines Before/After Given Style");
 }
 
 createUI();
