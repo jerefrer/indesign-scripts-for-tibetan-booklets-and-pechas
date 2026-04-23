@@ -1,5 +1,5 @@
 var mantraText =
-  "Oṁ yé dharmā hétu pra bhavāḥ    Hétun téṣān tathāgataé hya va dt    Téṣāncayo nirodha    Évaṁ vādī mahā śramaṇaḥ svāhā";
+  "Oṁ ye dharmā hetu prabhāvā hetuṃ teṣāṃ tathāgato hyavadat    Teṣāṃ ca yo nirodha evaṃ vādī mahāśramaṇaḥ svāhā";
 
 var selection = app.selection[0];
 if (selection && selection.hasOwnProperty("contents")) {
