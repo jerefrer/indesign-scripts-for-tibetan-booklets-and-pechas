@@ -174,9 +174,14 @@ function generateIASTFor(tibetan, isPhonetics) {
   inputFile.write(tibetan);
   inputFile.close();
 
+  // Use AppleScript's `quoted form of` to shell-escape every path. Without
+  // this, paths that contain spaces (e.g. .../Adobe InDesign/...) get split
+  // by the shell and Node receives a truncated module path.
   var appleScript =
   'set nodePath to "/opt/homebrew/bin/node"\r' +
-  'set command to nodePath & " ' + scriptDirectory + '/tibskrit-transliterator-cli.js /tmp/mantras_input.txt ' + (isPhonetics ? 'true' : 'false') + '"\r' +
+  'set scriptPath to "' + scriptDirectory + '/tibskrit-transliterator-cli.js"\r' +
+  'set inputPath to "/tmp/mantras_input.txt"\r' +
+  'set command to quoted form of nodePath & " " & quoted form of scriptPath & " " & quoted form of inputPath & " ' + (isPhonetics ? 'true' : 'false') + '"\r' +
   'set output to do shell script command\r' +
   'return output\r';
 
